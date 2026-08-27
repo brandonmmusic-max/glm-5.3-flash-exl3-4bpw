@@ -54,11 +54,11 @@ PYTHONPATH=runtime/src torchrun --standalone --nproc-per-node=2 runtime/scripts/
 
 Docker Hub: [`verdictai/glm53-flash-exl3-k4`](https://hub.docker.com/r/verdictai/glm53-flash-exl3-k4)
 
-- Version: `r19-sm120-tp2-v44`
-- Immutable OCI index digest: `sha256:15192e3930b4ae5558271ebe7d1a5a02da6dcc5a6c292c44e79a3fb8c883b5e1`
-- Linux/amd64 manifest: `sha256:0c35421c2c773743ee74b17592d5bd32143546a2bbfe32fc8f32b97ca74167bf`
+- Version: `r19-sm120-tp2-ep2-v71`
+- Immutable OCI index digest: `sha256:bb6d2516f88d963a0c8c10d85582c4580adc8754d506f62ce4915b84c095faca`
+- Linux/amd64 manifest: `sha256:77850e030d07df2e2907e6741b69883e82287cf731d1aaef8ff3f2070aedf351`
 - Hardware qualified: 2x RTX PRO 6000 Blackwell (SM120), TP2
-- Daily-driver mode: NVFP4 MLA KV, DCP2, CUDA graphs, MTP3, 499,968-token maximum context
+- Daily-driver mode: NVFP4 MLA KV, DCP2, CUDA graphs, MTP3; launcher ceiling 499,968 tokens
 - Accuracy mode: FP8 MLA KV, DCP1 or DCP2; the published serve script uses a measured-safe 262,144-token FP8 ceiling
 - Alternate mode: DCP1; DCP2 CUDA graphs with MTP3 are fixed and qualified in v44
 - Sampling defaults from the model generation config: temperature `1.0`, top-p `0.95`
@@ -72,8 +72,9 @@ that the checkpoint runs in upstream stock vLLM.
 
 ### Current local optimum: v71 validation profile (2026-08-27)
 
-`v71` names the latest validated benchmark/profile revision, not a Docker tag.
-It uses the local `r19-sm120-tp2-ep2-v47-candidate` image with NVFP4 MLA KV,
+`v71` is the latest validated benchmark/profile revision and the published
+Docker tag. The self-contained release bakes the exact runtime overlay and
+46-entry scale bank used by the measured profile into the image. It uses NVFP4 MLA KV,
 DCP2, MTP3 probabilistic rejection sampling, TP2/EP2, CUDA graphs, and the
 route128 SMEM/register fast path. The 46-entry power-of-two calibration bank
 covers all 45 backbone layers plus MTP45. No TMEM path is used on SM120.
@@ -91,7 +92,9 @@ that overclocking alone caused the change.
 | 32K | **6,219** | **149.58** | 51.72% |
 
 The exact v71 receipts and the later C1-C16/128K stress matrix are under
-`runtime-results/v71/benchmarks/`. The stress matrix reached 564.8 aggregate
+`runtime-results/v71/benchmarks/`. The GitHub-renderable terminal report is
+[`nvfp4-dcp2-mtp3-ws13-oc6000-c1-c16-through128k-tui.txt`](runtime-results/v71/benchmarks/nvfp4-dcp2-mtp3-ws13-oc6000-c1-c16-through128k-tui.txt).
+The stress matrix reached 564.8 aggregate
 tok/s at C8/0K and 481.7 tok/s at C8/32K, but those cells admitted only 7/8 and
 6/8 requests. C8/C16 at 64K was severely capacity/thermal limited. GPU 3
 reached 94 C and accumulated hardware thermal slowdown. The nominal 128K cells
@@ -269,7 +272,7 @@ GLM53_MODEL_PATH=/absolute/path/to/GLM-5.3-Flash-EXL3-4bpw \
 ### Serve script
 
 The published `runtime/serve-glm53-sm120-tp2.sh` defaults to GPUs 0,1, port
-8012, NVFP4/DCP2/MTP3, prefix caching disabled, and the immutable v44 digest:
+8012, NVFP4/DCP2/MTP3, prefix caching disabled, and the immutable v71 digest:
 
 ```bash
 chmod +x serve-glm53-sm120-tp2.sh
@@ -277,7 +280,9 @@ MODEL=/absolute/path/to/GLM-5.3-Flash-EXL3-4bpw ./serve-glm53-sm120-tp2.sh
 ```
 
 Use `CACHE=fp8_ds_mla`, `DCP=1`, or `MTP_TOKENS=0` for controlled variants.
-For a qualified single-request prompt through 500K, use:
+The inherited `long500k` launcher profile is the profile used for the historical
+v44 500K qualification. It is available in v71, but 500K was not rebenchmarked
+after the v71 runtime overlay. To select it, use:
 
 ```bash
 PROFILE=long500k MODEL=/absolute/path/to/GLM-5.3-Flash-EXL3-4bpw \

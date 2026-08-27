@@ -1,0 +1,82 @@
+
+
+llm-decode-bench v0.4.29
+╭────────────────────────────────── Phase 2 ───────────────────────────────────╮
+│ Sustained Decode                                                             │
+│ Steady-state decode throughput after the engine has admitted the requested   │
+│ concurrency and passed warmup. Use this as the main tuning/regression signal │
+│ for kernels, NCCL, DCP, MTP, and scheduler changes.                          │
+╰──────────────────────────────────────────────────────────────────────────────╯
+Aggregate tok/s  + TTFT/ITL                                                   
+╭────────────┬──────────┬──────────┬──────────┬──────────────┬───────────────╮
+│ ctx \ conc │        1 │        2 │        4 │            8 │            16 │
+├────────────┼──────────┼──────────┼──────────┼──────────────┼───────────────┤
+│ 0          │    146.7 │    258.2 │    393.9 │ 564.8 (7/8)* │ 563.1 (7/16)* │
+│            │     76/7 │    119/8 │    7k/11 │       481/13 │        27k/13 │
+│ 16k        │    143.1 │    260.3 │    395.0 │ 315.3 (6/8)* │ 360.9 (6/16)* │
+│            │     3k/7 │     4k/8 │    7k/13 │       11k/15 │     1e+01k/15 │
+│ 32k        │    144.6 │    242.4 │    385.6 │ 481.7 (6/8)* │ 445.1 (6/16)* │
+│            │     5k/7 │    8k/10 │   14k/15 │       19k/17 │        20k/18 │
+│ 64k        │    143.2 │    238.5 │    379.2 │  17.1 (5/8)* │  26.5 (5/16)* │
+│            │    11k/7 │   17k/11 │   28k/27 │       40k/20 │        39k/22 │
+│ 128k       │ 0.0 (1e) │ 0.0 (2e) │ 0.0 (4e) │     0.0 (8e) │             ∅ │
+╰────────────┴──────────┴──────────┴──────────┴──────────────┴───────────────╯
+Sustained Decode: aggregate tok/s uses OpenAI stream usage by default 
+(continuous completion_tokens when the server supports it). Prometheus is kept 
+as validation/scheduler data.
+Aggregate source(s): none, openai_continuous_usage
+∅ = skipped/hidden because the cell does not fit in KV cache; exact deficit is 
+kept in JSON timeout_reason
+(X/Y) = avg running / requested concurrency from Prometheus; * = 
+capacity-limited or warmup timed out
+Per-Request tok/s                                                 
+╭────────────┬───────┬───────┬──────┬─────────────┬──────────────╮
+│ ctx \ conc │     1 │     2 │    4 │           8 │           16 │
+├────────────┼───────┼───────┼──────┼─────────────┼──────────────┤
+│ 0          │ 146.7 │ 129.1 │ 98.5 │ 70.6 (7/8)* │ 35.2 (7/16)* │
+│ 16k        │ 143.1 │ 130.2 │ 98.8 │ 39.4 (6/8)* │ 22.6 (6/16)* │
+│ 32k        │ 144.6 │ 121.2 │ 96.4 │ 60.2 (6/8)* │ 27.8 (6/16)* │
+│ 64k        │ 143.2 │ 119.3 │ 94.8 │  2.1 (5/8)* │  1.7 (5/16)* │
+│ 128k       │     - │     - │    - │           - │            ∅ │
+╰────────────┴───────┴───────┴──────┴─────────────┴──────────────╯
+Client request latency: p50 / p90 ms                            
+╭────────────┬─────┬─────┬─────┬───────────────┬───────────────╮
+│ ctx \ conc │   1 │   2 │   4 │             8 │            16 │
+├────────────┼─────┼─────┼─────┼───────────────┼───────────────┤
+│ 0          │ —/— │ —/— │ —/— │   56.5k/57.6k │   55.7k/57.5k │
+│ 16k        │ —/— │ —/— │ —/— │   64.9k/66.7k │   65.5k/65.5k │
+│ 32k        │ —/— │ —/— │ —/— │           —/— │           —/— │
+│ 64k        │ —/— │ —/— │ —/— │ 106.1k/110.9k │ 106.5k/111.3k │
+│ 128k       │   - │   - │   - │             - │             ∅ │
+╰────────────┴─────┴─────┴─────┴───────────────┴───────────────╯
+Aggregate cells show dim detail as TTFT ms / ITL ms for the same ctx/conc 
+coordinate. ITL is computed from observed generated tokens, including streams 
+stopped at the measurement boundary; a missing ITL means no stream produced at 
+least two measured output tokens. Per-request tok/s and request latency are 
+shown in separate per-cell matrices. Completion/sample counts and full 
+request-level distributions remain in JSON under request_samples.
+Sustained mode: client latency metrics explain request UX variance; aggregate 
+tok/s remains the primary throughput signal. 
+ITL=(last_token_time-first_token_time)/(output_tokens-1), user tok/s=1/ITL.
+
+╭────────────────────────────────── Phase 3 ───────────────────────────────────╮
+│ Burst / E2E Decode                                                           │
+│ Not run. Re-run with --run-burst to append a finite client-facing request    │
+│ burst after Sustained Decode. This is intentionally disabled by default      │
+│ because it adds another full decode matrix.                                  │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+╭────────────────────────────── Primary Summary ───────────────────────────────╮
+│ Primary matrices repeated last so the important numbers are visible without  │
+│ scrolling back through diagnostics.                                          │
+╰──────────────────────────────────────────────────────────────────────────────╯
+Aggregate decode tok/s                                                        
+╭────────────┬──────────┬──────────┬──────────┬──────────────┬───────────────╮
+│ ctx \ conc │        1 │        2 │        4 │            8 │            16 │
+├────────────┼──────────┼──────────┼──────────┼──────────────┼───────────────┤
+│ 0          │    146.7 │    258.2 │    393.9 │ 564.8 (7/8)* │ 563.1 (7/16)* │
+│ 16k        │    143.1 │    260.3 │    395.0 │ 315.3 (6/8)* │ 360.9 (6/16)* │
+│ 32k        │    144.6 │    242.4 │    385.6 │ 481.7 (6/8)* │ 445.1 (6/16)* │
+│ 64k        │    143.2 │    238.5 │    379.2 │  17.1 (5/8)* │  26.5 (5/16)* │
+│ 128k       │ 0.0 (1e) │ 0.0 (2e) │ 0.0 (4e) │     0.0 (8e) │             ∅ │
+╰────────────┴──────────┴──────────┴──────────┴──────────────┴───────────────╯

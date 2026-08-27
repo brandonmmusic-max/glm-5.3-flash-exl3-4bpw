@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-IMAGE="${IMAGE:-verdictai/glm53-flash-exl3-k4:r19-sm120-tp2-v44@sha256:15192e3930b4ae5558271ebe7d1a5a02da6dcc5a6c292c44e79a3fb8c883b5e1}"
+IMAGE="${IMAGE:-verdictai/glm53-flash-exl3-k4:r19-sm120-tp2-ep2-v71@sha256:bb6d2516f88d963a0c8c10d85582c4580adc8754d506f62ce4915b84c095faca}"
 MODEL="${MODEL:-/home/brandonmusic/models/GLM-5.3-Flash-EXL3-4bpw}"
 CACHE="${CACHE:-nvfp4_ds_mla}"
 DCP="${DCP:-2}"

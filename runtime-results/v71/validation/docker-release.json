@@ -1,0 +1,28 @@
+{
+  "release": "r19-sm120-tp2-ep2-v71",
+  "repository": "verdictai/glm53-flash-exl3-k4",
+  "tags": [
+    "r19-sm120-tp2-ep2-v71",
+    "daily-driver-v71",
+    "daily-driver"
+  ],
+  "oci_index_digest": "sha256:bb6d2516f88d963a0c8c10d85582c4580adc8754d506f62ce4915b84c095faca",
+  "linux_amd64_manifest_digest": "sha256:77850e030d07df2e2907e6741b69883e82287cf731d1aaef8ff3f2070aedf351",
+  "attestation_manifest_digest": "sha256:53e9d6830bf1c9db395d79c7ad56a1e625d934e7838105126e2cf3e0a2aa6c11",
+  "effective_runtime_sha256": {
+    "b12x_kernel_py": "28e6a2ca95934921718f75f8cf575be034c23da78776b40d478bef6bf8b0b3cd",
+    "vllm_mla_py": "6e16cbd13e8cfc28627fcdd6d6d440c5850ef8a923d7823552f356f3086934fc",
+    "mla_cache_format_py": "4399bc687aa433790cfda26df1ab3f811e8c8344d1a3446b9b210058c79dedb0",
+    "nvfp4_46_layer_scale_bank": "f10b6ee1116d71c4b61c4603d38cb257b3f0dcfde9bcc0847839e48ac9baeb1d"
+  },
+  "architecture": {
+    "gpu": "SM120",
+    "parallelism": "TP2/EP2",
+    "routed_expert_storage": "rank-local E144 slabs from global E288",
+    "quantization": "uniform EXL3 K4 routed experts",
+    "route_block": 128,
+    "fast_path": "SMEM/register",
+    "tmem": false
+  },
+  "evidence_boundary": "The image contains the exact effective runtime overlay and scale bank used by the v71/v74 measurements. No post-measurement v75-only runtime changes are included."
+}
