@@ -51,6 +51,24 @@ difference is operational provenance, not a different score.
 The exact aggregate, five individual reports, and TP2 result are indexed under
 [`results/`](results/README.md).
 
+## BF16 teacher logits and replay calibration
+
+The complete teacher dataset is published at
+[`brandonmusic/GLM-5.3-Flash-BF16-Teacher-Logits`](https://huggingface.co/datasets/brandonmusic/GLM-5.3-Flash-BF16-Teacher-Logits).
+It contains 640 rolling calibration windows plus the 25 qualification-only final
+windows: 665 windows total, each with 2,048 input tokens, 2,047 scored positions,
+and the full 154,880-token vocabulary. The 1,361,255 scored positions occupy
+843,324,965,136 raw logits bytes.
+
+The teacher is the released BF16 checkpoint with its native FP32 tensors
+preserved; the logits are stored as float32 to avoid an additional
+storage-precision loss. Payload revision
+[`7c378d5f17dba158c4c803eff27c346dd0615660`](https://huggingface.co/datasets/brandonmusic/GLM-5.3-Flash-BF16-Teacher-Logits/tree/7c378d5f17dba158c4c803eff27c346dd0615660)
+is bound by the
+[`16e16e90078bc0b54bd1cd37b08ba7dad03819726d0258443a0e30b68b354472` aggregate audit](https://huggingface.co/datasets/brandonmusic/GLM-5.3-Flash-BF16-Teacher-Logits/blob/267ccf27ca92575529e0a1ef80e7eed8d209a8f4/logits/full-panel/receipts/full-dataset-audit.json),
+which records every payload path, size, and SHA-256. The 25 final windows remain
+qualification-only and are excluded from fitting and expert selection.
+
 ## Packed TP2 runtime qualification
 
 The custom two-GPU serving path keeps the EXL3 packed kernels active. Gate and up
