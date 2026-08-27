@@ -8,6 +8,18 @@ including the stored MTP45 expert tensors. Non-routed tensors retain the officia
 source dtype. The source checkpoint is
 `zai-org/GLM-5.3-Flash-BF16@a6c167b62691b2bac901344b65cb651a70f53e43`.
 
+## Results at a glance
+
+| Measurement | Mean teacher-to-student KLD | Scope | Receipt |
+|---|---:|---|---|
+| Direct packed TP2 serving | **0.022750847877672** | 1 sealed window, 2,047 positions | [`tp2-runtime-window-kld.json`](results/tp2-runtime-window-kld.json) |
+| Offline decoded-K4, five-run mean | **0.024554564249958** | 5 cold runs x 25 windows x 51,175 positions | [`five-cold-run-kld.json`](results/five-cold-run-kld.json) |
+
+These are different validation regimes. The `0.022750847877672` result is the
+actual packed TP2 runtime measurement requested for serving qualification. The
+five `0.024554564249958` values measure the decoded K4 checkpoint over the full
+25-window panel. Both are retained; neither is being substituted for the other.
+
 ## Five cold KLD runs
 
 KLD is teacher-to-student tokenwise KL over the same sealed panel of 25 windows.
@@ -36,7 +48,8 @@ is a clean restart (`run5b`): it wrote all 25 logit files, sealed a distinct
 capture receipt, and produced the same KLD as accepted runs 1-4. Thus the
 difference is operational provenance, not a different score.
 
-The exact aggregate and five individual reports are under [`results/`](results/).
+The exact aggregate, five individual reports, and TP2 result are indexed under
+[`results/`](results/README.md).
 
 ## Packed TP2 runtime qualification
 
