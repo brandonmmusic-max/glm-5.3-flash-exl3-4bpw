@@ -1,0 +1,131 @@
+GLM-5.3-Flash-EXL3-4bpw SM120 benchmark receipt
+Date: 2026-08-27
+Regime: NVFP4 MLA KV, DCP2, MTP3, route128 SMEM, CUDA graphs, TP2/EP2
+Hardware: physical GPUs 1 and 3, RTX PRO 6000 Blackwell Workstation Edition, +6000 MHz memory VF offset, 600 W power limit
+Harness: llm-decode-bench v0.4.29
+
+V71 single-request prefill
+context_tokens	tok_per_sec	samples
+8192	5723.0	7
+16384	6234.0	4
+32768	6219.0	2
+
+V71 single-request sustained decode
+context_tokens	aggregate_tok_per_sec	mtp_accept_rate	errors
+0	147.79458394966687	0.42857142857142855	0
+16384	148.54707362083076	0.5087719298245614	0
+32768	149.584005286096	0.5172413793103449	0
+
+V74 C1-C16 stress matrix (same kernel/cache regime, max_num_seqs=16, max_model_len=131072)
+context_tokens	requested_concurrency	effective_concurrency	aggregate_tok_per_sec	per_request_tok_per_sec	mtp_accept_rate	capacity_limited	errors	reason
+0	1	1	146.65121537087248	146.65121537087248	0.5536723163841808	false	0	
+16384	1	1	143.08551073442655	143.08551073442655	0.4327485380116959	false	0	
+32768	1	1	144.6459265427477	144.6459265427477	0.5028248587570622	false	0	
+65536	1	1	143.17751784370012	143.17751784370012	0.4367816091954023	false	0	
+131072	1	0.0	0.0	0.0	0.0	false	1	
+0	2	2	258.2204404979311	129.11022024896556	0.5766666666666667	false	0	
+0	4	4	393.88771793837697	98.47192948459424	0.543859649122807	false	0	
+0	8	7	564.7573372141668	70.59466715177085	0.554531490015361	true	0	running_reqs=7/8
+0	16	7	563.072363394983	35.192022712186436	0.5161290322580645	true	0	running_reqs=7/16
+16384	2	2	260.30345823226065	130.15172911613033	0.4826388888888889	false	0	
+16384	4	4	395.02264477324917	98.75566119331229	0.5789473684210527	false	0	
+16384	8	6	315.30643961379553	39.41330495172444	0.5017921146953405	true	0	running_reqs=6/8
+16384	16	6	360.9156363213099	22.557227270081867	0.5333333333333333	true	0	running_reqs=6/16
+32768	2	2	242.36251913211728	121.18125956605864	0.49	false	0	
+32768	4	4	385.6022333761359	96.40055834403398	0.5337837837837838	false	0	
+32768	8	6	481.69312884193164	60.211641105241455	0.5277777777777778	true	0	running_reqs=6/8
+32768	16	6	445.1347250255351	27.820920314095943	0.5259259259259259	true	0	running_reqs=6/16
+65536	2	2	238.51848649523478	119.25924324761739	0.5108695652173914	false	0	
+65536	4	4	379.238393464437	94.80959836610926	0.581081081081081	false	0	
+65536	8	5	17.10542329392408	2.13817791174051	0.4166666666666667	true	0	running_reqs=5/8
+65536	16	5	26.50589062884357	1.6566181643027231	0.7916666666666666	true	0	running_reqs=5/16
+131072	2	0.0	0.0	0.0	0.0	false	2	
+131072	4	0.0	0.0	0.0	0.0	false	4	
+131072	8	0.0	0.0	0.0	0.0	false	8	
+
+C16 at 128K was skipped by the harness and therefore has no result object.
+All 128K result objects contain only request errors because a 131072-token prompt plus requested output exceeds the 131072-token server ceiling; zero is not model throughput.
+C8/C16 rows marked capacity_limited did not admit the requested concurrency during warmup.
+GPU 3 reached 94 C and accumulated hardware thermal slowdown during the high-concurrency stress rows.
+
+Event log
+18:36:07 startup context 16k: 101,202 chars (~16,383 tokens)
+18:36:07 startup context 32k: 202,404 chars (~32,767 tokens)
+18:36:07 startup context 64k: 404,809 chars (~65,535 tokens)
+18:36:07 startup context 128k: 809,618 chars (~131,071 tokens)
+18:36:07 startup startup preparation done
+18:36:07 startup hardware monitor disabled
+18:36:07 decode warmup start
+18:36:07 decode warmup start C=1 ctx=64k 3s
+18:36:07 cell start C=1 ctx=64k
+18:36:32 ready C=1 ctx=64k running_reqs=1/1, queue_reqs=0, active_streams=1/1, stable=3.0s
+18:36:35 cell done C=1 ctx=64k 140.0 tok/s
+18:36:35 decode warmup done C=1 ctx=64k
+18:36:37 cell start C=1 ctx=0
+18:36:42 ready C=1 ctx=0 running_reqs=1/1, queue_reqs=0, active_streams=1/1, stable=3.0s
+18:36:52 cell done C=1 ctx=0 146.7 tok/s
+18:36:54 cell start C=1 ctx=16k
+18:37:04 ready C=1 ctx=16k running_reqs=1/1, queue_reqs=0, active_streams=1/1, stable=3.0s
+18:37:14 cell done C=1 ctx=16k 143.1 tok/s
+18:37:16 cell start C=1 ctx=32k
+18:37:30 ready C=1 ctx=32k running_reqs=1/1, queue_reqs=0, active_streams=1/1, stable=3.0s
+18:37:40 cell done C=1 ctx=32k 144.6 tok/s
+18:37:42 cell start C=1 ctx=64k
+18:38:06 ready C=1 ctx=64k running_reqs=1/1, queue_reqs=0, active_streams=1/1, stable=3.0s
+18:38:16 cell done C=1 ctx=64k 143.2 tok/s
+18:38:18 cell start C=1 ctx=128k
+18:38:48 cell done C=1 ctx=128k 0.0 tok/s
+18:38:50 cell start C=2 ctx=0
+18:38:55 ready C=2 ctx=0 running_reqs=2/2, queue_reqs=0, active_streams=2/2, stable=3.0s
+18:39:05 cell done C=2 ctx=0 258.2 tok/s
+18:39:07 cell start C=4 ctx=0
+18:39:18 ready C=4 ctx=0 running_reqs=4/4, queue_reqs=0, active_streams=4/4, stable=3.0s
+18:39:28 cell done C=4 ctx=0 393.9 tok/s
+18:39:30 cell start C=8 ctx=0
+18:40:31 warmup timeout C=8 ctx=0 running_reqs=7/8
+18:40:41 cell done C=8 ctx=0 564.8 tok/s
+18:40:43 cell start C=16 ctx=0
+18:41:44 warmup timeout C=16 ctx=0 running_reqs=7/16
+18:42:01 cell done C=16 ctx=0 563.1 tok/s
+18:42:03 cell start C=2 ctx=16k
+18:42:15 ready C=2 ctx=16k running_reqs=2/2, queue_reqs=0, active_streams=2/2, stable=3.0s
+18:42:25 cell done C=2 ctx=16k 260.3 tok/s
+18:42:27 cell start C=4 ctx=16k
+18:42:45 ready C=4 ctx=16k running_reqs=4/4, queue_reqs=0, active_streams=4/4, stable=3.0s
+18:42:55 cell done C=4 ctx=16k 395.0 tok/s
+18:42:57 cell start C=8 ctx=16k
+18:43:58 warmup timeout C=8 ctx=16k running_reqs=6/8
+18:44:15 cell done C=8 ctx=16k 315.3 tok/s
+18:44:17 cell start C=16 ctx=16k
+18:45:18 warmup timeout C=16 ctx=16k running_reqs=6/16
+18:45:58 cell done C=16 ctx=16k 360.9 tok/s
+18:46:00 cell start C=2 ctx=32k
+18:46:21 ready C=2 ctx=32k running_reqs=2/2, queue_reqs=0, active_streams=2/2, stable=3.0s
+18:46:31 cell done C=2 ctx=32k 242.4 tok/s
+18:46:33 cell start C=4 ctx=32k
+18:47:04 ready C=4 ctx=32k running_reqs=4/4, queue_reqs=0, active_streams=4/4, stable=3.0s
+18:47:14 cell done C=4 ctx=32k 385.6 tok/s
+18:47:16 cell start C=8 ctx=32k
+18:48:16 warmup timeout C=8 ctx=32k running_reqs=6/8
+18:48:38 cell done C=8 ctx=32k 481.7 tok/s
+18:48:40 cell start C=16 ctx=32k
+18:49:40 warmup timeout C=16 ctx=32k running_reqs=6/16
+18:50:20 cell done C=16 ctx=32k 445.1 tok/s
+18:50:22 cell start C=2 ctx=64k
+18:50:59 ready C=2 ctx=64k running_reqs=2/2, queue_reqs=0, active_streams=2/2, stable=3.0s
+18:51:09 cell done C=2 ctx=64k 238.5 tok/s
+18:51:11 cell start C=4 ctx=64k
+18:52:17 ready C=4 ctx=64k running_reqs=4/4, queue_reqs=0, active_streams=4/4, stable=3.0s
+18:52:28 cell done C=4 ctx=64k 379.2 tok/s
+18:52:30 cell start C=8 ctx=64k
+18:54:30 warmup timeout C=8 ctx=64k running_reqs=5/8
+18:55:10 cell done C=8 ctx=64k 17.1 tok/s
+18:55:12 cell start C=16 ctx=64k
+18:57:13 warmup timeout C=16 ctx=64k running_reqs=5/16
+18:57:53 cell done C=16 ctx=64k 26.5 tok/s
+18:57:55 cell start C=2 ctx=128k
+18:58:17 cell done C=2 ctx=128k 0.0 tok/s
+18:58:19 cell start C=4 ctx=128k
+18:58:43 cell done C=4 ctx=128k 0.0 tok/s
+18:58:45 cell start C=8 ctx=128k
+18:59:09 cell done C=8 ctx=128k 0.0 tok/s

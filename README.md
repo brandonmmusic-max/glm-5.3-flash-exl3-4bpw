@@ -70,7 +70,57 @@ and 11 DeepSeek sparse-attention layers, alternating three linear layers and one
 sparse layer. Sparse layers use IndexPool-4 and top-k 2,048. This is not a claim
 that the checkpoint runs in upstream stock vLLM.
 
-### Actual-runtime KLD: FP8 and NVFP4 KV cache
+### Current local optimum: v71 validation profile (2026-08-27)
+
+`v71` names the latest validated benchmark/profile revision, not a Docker tag.
+It uses the local `r19-sm120-tp2-ep2-v47-candidate` image with NVFP4 MLA KV,
+DCP2, MTP3 probabilistic rejection sampling, TP2/EP2, CUDA graphs, and the
+route128 SMEM/register fast path. The 46-entry power-of-two calibration bank
+covers all 45 backbone layers plus MTP45. No TMEM path is used on SM120.
+
+The v71 measurements used physical GPUs 1 and 3, both RTX PRO 6000 Blackwell
+Workstation Edition cards, with a +6000 MHz memory VF offset and 600 W power
+limit. These are workstation-pair/OC results and are not a controlled claim
+that overclocking alone caused the change.
+
+| Context | Warm prefill tok/s | C1 sustained decode tok/s | MTP draft acceptance |
+|---:|---:|---:|---:|
+| 0 | — | **147.79** | 42.86% |
+| 8K | **5,723** | — | — |
+| 16K | **6,234** | **148.55** | 50.88% |
+| 32K | **6,219** | **149.58** | 51.72% |
+
+The exact v71 receipts and the later C1-C16/128K stress matrix are under
+`runtime-results/v71/benchmarks/`. The stress matrix reached 564.8 aggregate
+tok/s at C8/0K and 481.7 tok/s at C8/32K, but those cells admitted only 7/8 and
+6/8 requests. C8/C16 at 64K was severely capacity/thermal limited. GPU 3
+reached 94 C and accumulated hardware thermal slowdown. The nominal 128K cells
+submitted a 131,072-token prompt plus requested output against a 131,072-token
+server ceiling; those request errors are disclosed and are not reported as zero
+model throughput. C16/128K was skipped by the harness because it did not fit.
+
+### Current actual-runtime KLD by MLA KV-cache type
+
+Both current results are independent five-run averages over the complete
+2,048-token `final-0000` qualification window (2,047 causal positions per run),
+compared against the sealed BF16 teacher logits. The matched correctness regime
+is TP2/EP2, DCP2, eager, no MTP, route128 SMEM. MTP is disabled only for this
+teacher-logit comparison so draft-token sampling cannot alter the scored
+runtime logits.
+
+| MLA KV cache | Five-run mean KLD | Population stddev | Mean top-1 agreement | Gate |
+|---|---:|---:|---:|---:|
+| FP8 | **0.024581652920** | 0.000159556478 | 0.936297020029 | pass |
+| NVFP4, calibrated power-of-two scales | **0.054757372223** | 0.000000000000 | 0.914997557401 | pass |
+
+The FP8 receipt SHA-256 is
+`da072d243fbdb231388bfc23b84bdb0cee2cb26c1885d3ec407c4164525b6b6b`;
+the NVFP4 receipt SHA-256 is
+`b52b6d7abbcbf1f0bc81f713e4513bc8a376235e2f44cc7f4ba7d368f62e69ca`.
+The NVFP4 no-MTP KLD exercises the 45 backbone cache entries; the published
+46th calibrated entry is the MTP layer used by the daily MTP3 profile.
+
+### Historical v44 actual-runtime KLD
 
 The exact 2,048-token `final-0000` qualification window was captured with TP2,
 DCP1, eager execution, `fp8_ds_mla`, no MTP, and full-vocabulary float32
@@ -129,14 +179,14 @@ profile. Use FP8 KV when KLD fidelity is the priority; use NVFP4 KV when the
 
 ### MTP3 DCP2 measured decode and prefill
 
-MTP3 is enabled by default with probabilistic rejection sampling. On the NVFP4
-DCP2 CUDA-graph path, concurrency-1 decode measured 98.9, 106.5, 101.2, 107.2,
-and 112.4 tokens/s at 0, 16K, 32K, 64K, and 128K context. Per-position MTP
-acceptance rose from 48.6% at zero context to 59.8% at 128K.
-
-Repeated warm prefill measured 3,819, 4,112, 4,149, 4,174, and 4,145 tokens/s
-at 8K, 16K, 32K, 64K, and 128K. The selected attention backend is
-`B12X_MLA_SPARSE`; this is the SM120 sparse fast path, not eager fallback.
+MTP3 remains enabled by default with probabilistic rejection sampling. The
+current v71 workstation-pair figures are reported above; the older v44
+measurements below remain useful as a non-OC historical baseline. On that v44
+NVFP4 DCP2 CUDA-graph path, concurrency-1 decode measured 98.9, 106.5, 101.2,
+107.2, and 112.4 tokens/s at 0, 16K, 32K, 64K, and 128K context. Repeated warm
+prefill measured 3,819, 4,112, 4,149, 4,174, and 4,145 tokens/s at 8K, 16K,
+32K, 64K, and 128K. The selected attention backend is `B12X_MLA_SPARSE`; this
+is the SM120 sparse fast path, not eager fallback.
 
 The DCP2 NVFP4 launch retained **608,656 logical KV tokens** (1.58 GiB cache
 memory per GPU), or 1.22x the configured 499,968-token maximum. The separately

@@ -1,0 +1,69 @@
+{
+  "all_quality_gates_passed": true,
+  "maximum_run_mean": 0.054757372223237115,
+  "mean_of_run_means": 0.05475737222323711,
+  "mean_top1_agreement": 0.9149975574010746,
+  "minimum_run_mean": 0.054757372223237115,
+  "population_stddev_of_run_means": 0.0,
+  "prediction_positions_per_run": 2047,
+  "regime": "NVFP4 MLA NoPE, power-of-two ceil amax scale v2, route128 SMEM, TP2/EP2, DCP2 B12X A2A eager no-MTP, full 2048-token window",
+  "run_count": 5,
+  "runs": [
+    {
+      "capture_manifest_sha256": "6c305e2768d5d2ae1be6de42f5e3d82c56a7f95516bf369a81a470a082139dd6",
+      "mean_kld": 0.054757372223237115,
+      "prediction_positions": 2047,
+      "quality_gate_passed": true,
+      "report_path": "/home/brandonmusic/KLC_SANDBOXES/glm53-exl3-k4-sm120/results/kld/nvfp4-dcp2-eager-ep2-route128-smem-power2-v63/measurements/run-01/kld-report.json",
+      "report_sha256": "658fb85d0485b8b568d4aed16dc0029c53018a7e54dcc037d67e9d27cea35e56",
+      "run": 1,
+      "tokenwise_kld_sha256": "39091c2a0a8a78bb95643079e866faf48dd12ba18a5413227c2ba8278017f62c",
+      "top1_agreement": 0.9149975574010747
+    },
+    {
+      "capture_manifest_sha256": "3479ef2fc91ea0fabb828d7adfeb946494679716cf7c9162558ef9e2939f099a",
+      "mean_kld": 0.054757372223237115,
+      "prediction_positions": 2047,
+      "quality_gate_passed": true,
+      "report_path": "/home/brandonmusic/KLC_SANDBOXES/glm53-exl3-k4-sm120/results/kld/nvfp4-dcp2-eager-ep2-route128-smem-power2-v63/measurements/run-02/kld-report.json",
+      "report_sha256": "cb91b45e32e76ff2fd5da7e58aa765937e4d1cf3b6469b93146fd91540ef9d9c",
+      "run": 2,
+      "tokenwise_kld_sha256": "39091c2a0a8a78bb95643079e866faf48dd12ba18a5413227c2ba8278017f62c",
+      "top1_agreement": 0.9149975574010747
+    },
+    {
+      "capture_manifest_sha256": "462705e7be05d407082b3083302eee2474035c05e7a1e5c265c4ba189656ccb7",
+      "mean_kld": 0.054757372223237115,
+      "prediction_positions": 2047,
+      "quality_gate_passed": true,
+      "report_path": "/home/brandonmusic/KLC_SANDBOXES/glm53-exl3-k4-sm120/results/kld/nvfp4-dcp2-eager-ep2-route128-smem-power2-v63/measurements/run-03/kld-report.json",
+      "report_sha256": "6416bf933832576a6f81bfbb7222fade2a544f4112a43a16e695b8f800ae5ca6",
+      "run": 3,
+      "tokenwise_kld_sha256": "39091c2a0a8a78bb95643079e866faf48dd12ba18a5413227c2ba8278017f62c",
+      "top1_agreement": 0.9149975574010747
+    },
+    {
+      "capture_manifest_sha256": "737e3b29951b602b05d91452461f65c2d4ec7854cf7561e81a2ce5717c97a84b",
+      "mean_kld": 0.054757372223237115,
+      "prediction_positions": 2047,
+      "quality_gate_passed": true,
+      "report_path": "/home/brandonmusic/KLC_SANDBOXES/glm53-exl3-k4-sm120/results/kld/nvfp4-dcp2-eager-ep2-route128-smem-power2-v63/measurements/run-04/kld-report.json",
+      "report_sha256": "44b805427ae8d09ca2f71d118c5a43cbeb535988671786969d714529ec54e289",
+      "run": 4,
+      "tokenwise_kld_sha256": "39091c2a0a8a78bb95643079e866faf48dd12ba18a5413227c2ba8278017f62c",
+      "top1_agreement": 0.9149975574010747
+    },
+    {
+      "capture_manifest_sha256": "712fcb954ae9ce118d08ff7afcb6784c7b69e2dad71f601d12d9fe4dd3d80879",
+      "mean_kld": 0.054757372223237115,
+      "prediction_positions": 2047,
+      "quality_gate_passed": true,
+      "report_path": "/home/brandonmusic/KLC_SANDBOXES/glm53-exl3-k4-sm120/results/kld/nvfp4-dcp2-eager-ep2-route128-smem-power2-v63/measurements/run-05/kld-report.json",
+      "report_sha256": "c33c8bb8bcb213366825209bc6809faf97970b9ba3a0dc6c73e3c20f8133f3f2",
+      "run": 5,
+      "tokenwise_kld_sha256": "39091c2a0a8a78bb95643079e866faf48dd12ba18a5413227c2ba8278017f62c",
+      "top1_agreement": 0.9149975574010747
+    }
+  ],
+  "schema": "glm53-r19-runtime-kld-repeated.v1"
+}

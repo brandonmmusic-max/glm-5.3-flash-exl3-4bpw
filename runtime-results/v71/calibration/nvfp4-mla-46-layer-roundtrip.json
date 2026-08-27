@@ -1,0 +1,550 @@
+{
+  "all_identity_power2_bitwise_equal": true,
+  "calibration_file": "results/calibration/nvfp4-mla-glm53-exl3-k4-mtp-real-latents-v68/glm53_nvfp4_mla_outer_scales_mtp_v1.json",
+  "latent_dim": 512,
+  "layer_count": 12,
+  "layers": [
+    {
+      "identity_power2_bitwise_equal": true,
+      "identity_power2_max_abs_delta": 0.0,
+      "layer": 3,
+      "measurements": {
+        "amax_v1": {
+          "cosine": 0.9954884648323059,
+          "group_scale_count": 131072,
+          "mae": 0.03056708723306656,
+          "max_abs": 0.2633928060531616,
+          "mse": 0.00165838235989213,
+          "outer_scale": 0.0009300595238095238,
+          "relative_l2": 0.09501160681247711,
+          "saturated_group_scales": 2,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        },
+        "identity": {
+          "cosine": 0.9954779148101807,
+          "group_scale_count": 131072,
+          "mae": 0.03058144822716713,
+          "max_abs": 0.265625,
+          "mse": 0.0016613013576716185,
+          "outer_scale": 1.0,
+          "relative_l2": 0.0950951799750328,
+          "saturated_group_scales": 0,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        },
+        "power2_ceil_v2": {
+          "cosine": 0.9954779148101807,
+          "group_scale_count": 131072,
+          "mae": 0.03058144822716713,
+          "max_abs": 0.265625,
+          "mse": 0.0016613013576716185,
+          "outer_scale": 0.0009765625,
+          "relative_l2": 0.0950951799750328,
+          "saturated_group_scales": 0,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        }
+      },
+      "rows": 4096,
+      "source_max_abs": 2.484375
+    },
+    {
+      "identity_power2_bitwise_equal": true,
+      "identity_power2_max_abs_delta": 0.0,
+      "layer": 7,
+      "measurements": {
+        "amax_v1": {
+          "cosine": 0.9954780340194702,
+          "group_scale_count": 131072,
+          "mae": 0.0318043977022171,
+          "max_abs": 0.2622767686843872,
+          "mse": 0.001806139713153243,
+          "outer_scale": 0.0009184337797619048,
+          "relative_l2": 0.09507618844509125,
+          "saturated_group_scales": 8,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        },
+        "identity": {
+          "cosine": 0.9954801797866821,
+          "group_scale_count": 131072,
+          "mae": 0.03179667145013809,
+          "max_abs": 0.28125,
+          "mse": 0.0018056603148579597,
+          "outer_scale": 1.0,
+          "relative_l2": 0.09506356716156006,
+          "saturated_group_scales": 0,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        },
+        "power2_ceil_v2": {
+          "cosine": 0.9954801797866821,
+          "group_scale_count": 131072,
+          "mae": 0.03179667145013809,
+          "max_abs": 0.28125,
+          "mse": 0.0018056603148579597,
+          "outer_scale": 0.0009765625,
+          "relative_l2": 0.09506356716156006,
+          "saturated_group_scales": 0,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        }
+      },
+      "rows": 4096,
+      "source_max_abs": 2.46875
+    },
+    {
+      "identity_power2_bitwise_equal": true,
+      "identity_power2_max_abs_delta": 0.0,
+      "layer": 11,
+      "measurements": {
+        "amax_v1": {
+          "cosine": 0.9954895377159119,
+          "group_scale_count": 131072,
+          "mae": 0.04162008315324783,
+          "max_abs": 0.3582589626312256,
+          "mse": 0.0030665688682347536,
+          "outer_scale": 0.0011509486607142857,
+          "relative_l2": 0.094970703125,
+          "saturated_group_scales": 0,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        },
+        "identity": {
+          "cosine": 0.9954779148101807,
+          "group_scale_count": 131072,
+          "mae": 0.04162497818470001,
+          "max_abs": 0.3515625,
+          "mse": 0.0030731521546840668,
+          "outer_scale": 1.0,
+          "relative_l2": 0.09507258981466293,
+          "saturated_group_scales": 0,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        },
+        "power2_ceil_v2": {
+          "cosine": 0.9954779148101807,
+          "group_scale_count": 131072,
+          "mae": 0.04162497818470001,
+          "max_abs": 0.3515625,
+          "mse": 0.0030731521546840668,
+          "outer_scale": 0.001953125,
+          "relative_l2": 0.09507258981466293,
+          "saturated_group_scales": 0,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        }
+      },
+      "rows": 4096,
+      "source_max_abs": 2.90625
+    },
+    {
+      "identity_power2_bitwise_equal": true,
+      "identity_power2_max_abs_delta": 0.0,
+      "layer": 15,
+      "measurements": {
+        "amax_v1": {
+          "cosine": 0.9954894185066223,
+          "group_scale_count": 131072,
+          "mae": 0.061601024121046066,
+          "max_abs": 0.5409226417541504,
+          "mse": 0.0067222947254776955,
+          "outer_scale": 0.0015578497023809525,
+          "relative_l2": 0.0949760228395462,
+          "saturated_group_scales": 4,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        },
+        "identity": {
+          "cosine": 0.9954780340194702,
+          "group_scale_count": 131072,
+          "mae": 0.06167641282081604,
+          "max_abs": 0.546875,
+          "mse": 0.006737144663929939,
+          "outer_scale": 1.0,
+          "relative_l2": 0.09508086740970612,
+          "saturated_group_scales": 0,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        },
+        "power2_ceil_v2": {
+          "cosine": 0.9954780340194702,
+          "group_scale_count": 131072,
+          "mae": 0.06167641282081604,
+          "max_abs": 0.546875,
+          "mse": 0.006737144663929939,
+          "outer_scale": 0.001953125,
+          "relative_l2": 0.09508086740970612,
+          "saturated_group_scales": 0,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        }
+      },
+      "rows": 4096,
+      "source_max_abs": 4.15625
+    },
+    {
+      "identity_power2_bitwise_equal": true,
+      "identity_power2_max_abs_delta": 0.0,
+      "layer": 19,
+      "measurements": {
+        "amax_v1": {
+          "cosine": 0.9954702854156494,
+          "group_scale_count": 131072,
+          "mae": 0.0708543062210083,
+          "max_abs": 0.6852679252624512,
+          "mse": 0.008952798321843147,
+          "outer_scale": 0.0018019903273809525,
+          "relative_l2": 0.09518910944461823,
+          "saturated_group_scales": 4,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        },
+        "identity": {
+          "cosine": 0.9954752326011658,
+          "group_scale_count": 131072,
+          "mae": 0.0707758218050003,
+          "max_abs": 0.671875,
+          "mse": 0.00893767736852169,
+          "outer_scale": 1.0,
+          "relative_l2": 0.09510868787765503,
+          "saturated_group_scales": 0,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        },
+        "power2_ceil_v2": {
+          "cosine": 0.9954752326011658,
+          "group_scale_count": 131072,
+          "mae": 0.0707758218050003,
+          "max_abs": 0.671875,
+          "mse": 0.00893767736852169,
+          "outer_scale": 0.001953125,
+          "relative_l2": 0.09510868787765503,
+          "saturated_group_scales": 0,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        }
+      },
+      "rows": 4096,
+      "source_max_abs": 4.8125
+    },
+    {
+      "identity_power2_bitwise_equal": true,
+      "identity_power2_max_abs_delta": 0.0,
+      "layer": 23,
+      "measurements": {
+        "amax_v1": {
+          "cosine": 0.9954620599746704,
+          "group_scale_count": 131072,
+          "mae": 0.07034298777580261,
+          "max_abs": 0.6041667461395264,
+          "mse": 0.008781777694821358,
+          "outer_scale": 0.0018717447916666667,
+          "relative_l2": 0.09524809569120407,
+          "saturated_group_scales": 0,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        },
+        "identity": {
+          "cosine": 0.9954714179039001,
+          "group_scale_count": 131072,
+          "mae": 0.07029106467962265,
+          "max_abs": 0.609375,
+          "mse": 0.008763793855905533,
+          "outer_scale": 1.0,
+          "relative_l2": 0.09515052288770676,
+          "saturated_group_scales": 0,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        },
+        "power2_ceil_v2": {
+          "cosine": 0.9954714179039001,
+          "group_scale_count": 131072,
+          "mae": 0.07029106467962265,
+          "max_abs": 0.609375,
+          "mse": 0.008763793855905533,
+          "outer_scale": 0.001953125,
+          "relative_l2": 0.09515052288770676,
+          "saturated_group_scales": 0,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        }
+      },
+      "rows": 4096,
+      "source_max_abs": 4.75
+    },
+    {
+      "identity_power2_bitwise_equal": true,
+      "identity_power2_max_abs_delta": 0.0,
+      "layer": 27,
+      "measurements": {
+        "amax_v1": {
+          "cosine": 0.9954664707183838,
+          "group_scale_count": 131072,
+          "mae": 0.06006619334220886,
+          "max_abs": 0.5089285373687744,
+          "mse": 0.0064204102382063866,
+          "outer_scale": 0.0015694754464285715,
+          "relative_l2": 0.09518792480230331,
+          "saturated_group_scales": 0,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        },
+        "identity": {
+          "cosine": 0.995460033416748,
+          "group_scale_count": 131072,
+          "mae": 0.06013613939285278,
+          "max_abs": 0.5,
+          "mse": 0.006430730223655701,
+          "outer_scale": 1.0,
+          "relative_l2": 0.09526439756155014,
+          "saturated_group_scales": 0,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        },
+        "power2_ceil_v2": {
+          "cosine": 0.995460033416748,
+          "group_scale_count": 131072,
+          "mae": 0.06013613939285278,
+          "max_abs": 0.5,
+          "mse": 0.006430730223655701,
+          "outer_scale": 0.001953125,
+          "relative_l2": 0.09526439756155014,
+          "saturated_group_scales": 0,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        }
+      },
+      "rows": 4096,
+      "source_max_abs": 4.0
+    },
+    {
+      "identity_power2_bitwise_equal": true,
+      "identity_power2_max_abs_delta": 0.0,
+      "layer": 31,
+      "measurements": {
+        "amax_v1": {
+          "cosine": 0.9954719543457031,
+          "group_scale_count": 131072,
+          "mae": 0.058259010314941406,
+          "max_abs": 0.4851188659667969,
+          "mse": 0.006024934817105532,
+          "outer_scale": 0.001453218005952381,
+          "relative_l2": 0.09511880576610565,
+          "saturated_group_scales": 6,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        },
+        "identity": {
+          "cosine": 0.9954771995544434,
+          "group_scale_count": 131072,
+          "mae": 0.0583190843462944,
+          "max_abs": 0.5,
+          "mse": 0.006021076813340187,
+          "outer_scale": 1.0,
+          "relative_l2": 0.09508834034204483,
+          "saturated_group_scales": 0,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        },
+        "power2_ceil_v2": {
+          "cosine": 0.9954771995544434,
+          "group_scale_count": 131072,
+          "mae": 0.0583190843462944,
+          "max_abs": 0.5,
+          "mse": 0.006021076813340187,
+          "outer_scale": 0.001953125,
+          "relative_l2": 0.09508834034204483,
+          "saturated_group_scales": 0,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        }
+      },
+      "rows": 4096,
+      "source_max_abs": 3.890625
+    },
+    {
+      "identity_power2_bitwise_equal": true,
+      "identity_power2_max_abs_delta": 0.0,
+      "layer": 35,
+      "measurements": {
+        "amax_v1": {
+          "cosine": 0.9954869151115417,
+          "group_scale_count": 131072,
+          "mae": 0.058340366929769516,
+          "max_abs": 0.4776785373687744,
+          "mse": 0.006028733216226101,
+          "outer_scale": 0.0016741071428571428,
+          "relative_l2": 0.09498274326324463,
+          "saturated_group_scales": 0,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        },
+        "identity": {
+          "cosine": 0.9954763650894165,
+          "group_scale_count": 131072,
+          "mae": 0.05836476385593414,
+          "max_abs": 0.5625,
+          "mse": 0.006042580120265484,
+          "outer_scale": 1.0,
+          "relative_l2": 0.09509176015853882,
+          "saturated_group_scales": 0,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        },
+        "power2_ceil_v2": {
+          "cosine": 0.9954763650894165,
+          "group_scale_count": 131072,
+          "mae": 0.05836476385593414,
+          "max_abs": 0.5625,
+          "mse": 0.006042580120265484,
+          "outer_scale": 0.001953125,
+          "relative_l2": 0.09509176015853882,
+          "saturated_group_scales": 0,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        }
+      },
+      "rows": 4096,
+      "source_max_abs": 3.953125
+    },
+    {
+      "identity_power2_bitwise_equal": true,
+      "identity_power2_max_abs_delta": 0.0,
+      "layer": 39,
+      "measurements": {
+        "amax_v1": {
+          "cosine": 0.995493471622467,
+          "group_scale_count": 131072,
+          "mae": 0.05360236391425133,
+          "max_abs": 0.45758938789367676,
+          "mse": 0.005089222453534603,
+          "outer_scale": 0.0015694754464285715,
+          "relative_l2": 0.09491299837827682,
+          "saturated_group_scales": 2,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        },
+        "identity": {
+          "cosine": 0.9954992532730103,
+          "group_scale_count": 131072,
+          "mae": 0.05355574190616608,
+          "max_abs": 0.484375,
+          "mse": 0.005083861760795116,
+          "outer_scale": 1.0,
+          "relative_l2": 0.09486299753189087,
+          "saturated_group_scales": 0,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        },
+        "power2_ceil_v2": {
+          "cosine": 0.9954992532730103,
+          "group_scale_count": 131072,
+          "mae": 0.05355574190616608,
+          "max_abs": 0.484375,
+          "mse": 0.005083861760795116,
+          "outer_scale": 0.001953125,
+          "relative_l2": 0.09486299753189087,
+          "saturated_group_scales": 0,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        }
+      },
+      "rows": 4096,
+      "source_max_abs": 4.0625
+    },
+    {
+      "identity_power2_bitwise_equal": true,
+      "identity_power2_max_abs_delta": 0.0,
+      "layer": 43,
+      "measurements": {
+        "amax_v1": {
+          "cosine": 0.9954880475997925,
+          "group_scale_count": 131072,
+          "mae": 0.05625540018081665,
+          "max_abs": 0.484375,
+          "mse": 0.005608231760561466,
+          "outer_scale": 0.0015462239583333333,
+          "relative_l2": 0.09498977661132812,
+          "saturated_group_scales": 2,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        },
+        "identity": {
+          "cosine": 0.9954819083213806,
+          "group_scale_count": 131072,
+          "mae": 0.05630197003483772,
+          "max_abs": 0.5,
+          "mse": 0.005614439956843853,
+          "outer_scale": 1.0,
+          "relative_l2": 0.09504234045743942,
+          "saturated_group_scales": 0,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        },
+        "power2_ceil_v2": {
+          "cosine": 0.9954819083213806,
+          "group_scale_count": 131072,
+          "mae": 0.05630197003483772,
+          "max_abs": 0.5,
+          "mse": 0.005614439956843853,
+          "outer_scale": 0.001953125,
+          "relative_l2": 0.09504234045743942,
+          "saturated_group_scales": 0,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        }
+      },
+      "rows": 4096,
+      "source_max_abs": 4.03125
+    },
+    {
+      "identity_power2_bitwise_equal": true,
+      "identity_power2_max_abs_delta": 0.0,
+      "layer": 45,
+      "measurements": {
+        "amax_v1": {
+          "cosine": 0.9954857230186462,
+          "group_scale_count": 131072,
+          "mae": 0.05496840178966522,
+          "max_abs": 0.4724702835083008,
+          "mse": 0.005355837754905224,
+          "outer_scale": 0.0015229724702380952,
+          "relative_l2": 0.09500474482774734,
+          "saturated_group_scales": 0,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        },
+        "identity": {
+          "cosine": 0.9954841136932373,
+          "group_scale_count": 131072,
+          "mae": 0.054981447756290436,
+          "max_abs": 0.453125,
+          "mse": 0.005357746966183186,
+          "outer_scale": 1.0,
+          "relative_l2": 0.09502167999744415,
+          "saturated_group_scales": 0,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        },
+        "power2_ceil_v2": {
+          "cosine": 0.9954841136932373,
+          "group_scale_count": 131072,
+          "mae": 0.054981447756290436,
+          "max_abs": 0.453125,
+          "mse": 0.005357746966183186,
+          "outer_scale": 0.001953125,
+          "relative_l2": 0.09502167999744415,
+          "saturated_group_scales": 0,
+          "subnormal_group_scales": 0,
+          "zero_group_scales": 0
+        }
+      },
+      "rows": 4096,
+      "source_max_abs": 3.75
+    }
+  ],
+  "sample_file": "results/calibration/nvfp4-mla-glm53-exl3-k4-mtp-real-latents-v68/glm53_mla_mtp_latent_samples.safetensors",
+  "schema": "b12x.nvfp4-mla-real-latent-outer-scale-roundtrip.v1"
+}

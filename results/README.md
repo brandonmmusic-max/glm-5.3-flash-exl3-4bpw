@@ -1,5 +1,15 @@
 # Measured results
 
+## Current SM120 v71 runtime results
+
+The current TP2/EP2 route128 validation artifacts are published under
+[`runtime-results/v71`](../runtime-results/v71). They include the complete
+five-run FP8 and calibrated-NVFP4 MLA KV-cache KLD receipts, v71 workstation
+pair prefill and C1 decode receipts, the later C1-C16 stress matrix through the
+nominal 128K harness row, and a postable plain-text `.log` summary. See the main
+model card for the exact regime, results, capacity limitations, and thermal
+caveats.
+
 ## Direct packed TP2 serving result
 
 - Mean BF16-teacher-to-runtime KLD: **`0.022750847877671544`**
