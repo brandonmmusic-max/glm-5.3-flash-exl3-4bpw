@@ -1,0 +1,80 @@
+
+New version available: v0.4.29 (current: v0.4.24)
+Upgrade and restart? [Y/n]: Skipping update.
+
+╭──────────────────────────── NVIDIA P2P Override ─────────────────────────────╮
+│ Effective: yes                                                               │
+│ Configured file: yes (/etc/modprobe.d/nvidia-p2p-override.conf)              │
+│ Runtime: ForceP2P=0x11; RMForceP2PType=1; RMPcieP2PType=2;                   │
+│ GrdmaPciTopoCheckOverride=1; EnableResizableBar=1; DmaRemapPeerMmio=1        │
+╰──────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────── Configuration ────────────────────────────────╮
+│ Hotel Lights Reasoning Test                                                  │
+│ Model: GLM-5.3-Flash-EXL3-4bpw @ 127.0.0.1:8013                              │
+│ Prompt: profile:hotel-lights                                                 │
+│ Concurrency: 1                                                               │
+│ Measured runs: 10 | Max tokens: omitted (no client cap)                      │
+│ Scoring: EXACT / FAIL final number                                           │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+╭────────────────────────────── Completion Stats ──────────────────────────────╮
+│ Hotel Lights Reasoning Test                                                  │
+│ A compact reasoning profile with a known numeric answer. It checks whether   │
+│ the model handles repeated toggles plus the cat reset rule and returns 48.   │
+│ Built-in profile run at fixed concurrency C=1.                               │
+╰──────────────────────────────────────────────────────────────────────────────╯
+Profile                                                
+╭────────────────┬────────────────────────────────────╮
+│ field          │ value                              │
+├────────────────┼────────────────────────────────────┤
+│ profile        │ hotel-lights                       │
+│ prompt         │ profile:hotel-lights               │
+│ prompt chars   │ 385                                │
+│ requested runs │ 10                                 │
+│ concurrency    │ 1                                  │
+│ max tokens     │ omitted (server/model default)     │
+│ scoring        │ numeric_exact                      │
+│ expected       │ 48                                 │
+│ prefill scout  │ 102 prompt tok / 0.19s = 530 tok/s │
+╰────────────────┴────────────────────────────────────╯
+╭──────────────────────── Whole-run GPU Power ─────────────────────────╮
+│ avg 589 W | max 899 W | limit 1,175 W | over 58m 44s | 1,456 samples │
+╰──────────────────────────────────────────────────────────────────────╯
+Concurrency Results                                                             
+╭───┬──────┬────────────────────┬────┬─────────┬────────┬──────────┬───────┬───╮
+│ … │ don… │              score │ s… │ output… │ outpu… │ aggrega… │ avg … │ … │
+├───┼──────┼────────────────────┼────┼─────────┼────────┼──────────┼───────┼───┤
+│ 1 │ 10/… │ EXACT 7 / NEAR 0 … │ ★… │  26,476 │ 45,375 │     80.7 │ 352.7 │ … │
+╰───┴──────┴────────────────────┴────┴─────────┴────────┴──────────┴───────┴───╯
+Selected C=1                                              
+╭────────────────────────────┬───────────────────────────╮
+│ metric                     │                     value │
+├────────────────────────────┼───────────────────────────┤
+│ completed                  │                     10/10 │
+│ score                      │ EXACT 7 / NEAR 0 / FAIL 3 │
+│ stars                      │             ★★★★★★★✕✕✕ 👍 │
+│ hit max_tokens             │                         0 │
+│ completion tokens avg      │                    28,445 │
+│ completion tokens p50      │                    26,476 │
+│ completion tokens p90      │                    45,375 │
+│ completion tokens p99      │                    52,398 │
+│ elapsed avg                │                    352.7s │
+│ TTFT avg                   │                     0.14s │
+│ aggregate gen tok/s        │                      80.7 │
+│ mean per-request gen tok/s │                      80.7 │
+╰────────────────────────────┴───────────────────────────╯
+Failed Final Answers                                      
+╭───┬───┬────────┬───────┬───────────────────────────────╮
+│ # │ C │ tokens │ score │ final answer                  │
+├───┼───┼────────┼───────┼───────────────────────────────┤
+│ 2 │ 1 │ 30,543 │ FAIL  │ 45 (expected 48, got 45) | 45 │
+│ 3 │ 1 │  7,493 │ FAIL  │ 32 (expected 48, got 32) | 32 │
+│ 9 │ 1 │ 28,657 │ FAIL  │ 47 (expected 48, got 47) | 47 │
+╰───┴───┴────────┴───────┴───────────────────────────────╯
+Interpretation: EXACT means the final parsed number matches the expected answer.
+FAIL means the answer was unparseable or a different number. The 10-slot quality
+bar is a rounded distribution: ★=EXACT, ✕=FAIL.
+
+Results saved to 
+/home/brandonmusic/KLC_SANDBOXES/glm53-exl3-k4-sm120/results/final-v30-nvfp4-dcp
+1-500k-glm45/hotel-10x.json
