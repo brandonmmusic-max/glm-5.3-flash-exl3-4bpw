@@ -99,6 +99,11 @@ they should be treated as later latency work, not as evidence for a different KL
 - `results/tp2-runtime-window-kld.json`: direct packed TP2 window metric.
 - `results/tp2-runtime-qualified.json`: sealed TP2 qualification receipt.
 - `results/materialization-receipt.json`: complete checkpoint census and hashes.
+- `scripts/capture_glm53_packed_k4_student_logits_ep4.py`: exact four-rank
+  offline decoded-K4 student-logit capture used by the five cold runs.
+- `scripts/measure_glm53_packed_student_kld.py`: exact full-panel tokenwise
+  `KL(BF16 || K4)` measurement and receipt writer.
+- `scripts/aggregate_glm53_five_run_kld.py`: exact five-report aggregation gate.
 - `src/quant_pipeline/`: runtime and receipt implementation.
 - `scripts/`: launch, qualification, KLD, and aggregation entry points.
 

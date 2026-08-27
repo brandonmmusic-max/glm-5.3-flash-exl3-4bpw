@@ -32,3 +32,29 @@ The original fifth attempt received an external SIGTERM before writing logits
 and is excluded. Accepted run 5 is the clean `run5b` retry. Its different name
 records that operational retry; its measured KLD equals the other four accepted
 runs.
+
+## Exact five-run reproduction scripts
+
+The source used for the accepted offline decoded-K4 measurements is preserved
+in this repository:
+
+1. [`capture_glm53_packed_k4_student_logits_ep4.py`](../scripts/capture_glm53_packed_k4_student_logits_ep4.py)
+   launches with `torchrun --nproc-per-node=4`, loads the immutable BF16 source
+   checkpoint under Transformers EP4, independently decodes the hash-verified
+   packed K4 experts into each rank's local BF16 expert parameters, and captures
+   float32 student logits for the 25 qualification-only windows.
+2. [`measure_glm53_packed_student_kld.py`](../scripts/measure_glm53_packed_student_kld.py)
+   computes tokenwise `KL(BF16 teacher || packed-K4 student)` in float64 over all
+   51,175 jointly valid causal positions and seals the per-token, per-window,
+   per-domain, top-1-agreement, and aggregate results.
+3. [`aggregate_glm53_five_run_kld.py`](../scripts/aggregate_glm53_five_run_kld.py)
+   accepts exactly five independently sealed KLD reports and produces the
+   five-cold-run mean and dispersion receipt.
+
+Each accepted run begins with a new capture process and model load. The capture
+script is deliberately fail-closed: it requires the exact full-hash BF16
+inventory, uniform-K4 contract, content-addressed packed surface, qualified MTP45
+adapter receipt, and sealed token-panel receipt used by the campaign. This is
+the offline decoded-EP4 measurement that produced `0.024554564249958208`; it is
+not the separate packed TP2 runtime measurement that produced
+`0.022750847877671544`.
