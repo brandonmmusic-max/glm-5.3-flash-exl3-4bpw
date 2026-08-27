@@ -1,0 +1,131 @@
+{
+  "audit_version": 1,
+  "source": "/home/brandonmusic/KLC_SANDBOXES/glm53-exl3-k4-sm120/results/quality/nvfp4-dcp2-graph-mtp3-v43-noprefix-rerun/lavd-10x.json",
+  "source_sha256": "cb46533b38a9b52fe23928335d8e1b5429fd4d36e007d0b399dbfcfc3becfacc",
+  "expected_answer": [
+    72,
+    46.0
+  ],
+  "near_tolerance": 4.0,
+  "summary": {
+    "exact": 1,
+    "near": 2,
+    "fail": 7,
+    "accepted": 3,
+    "total": 10
+  },
+  "runs": [
+    {
+      "run_index": 1,
+      "original_label": "fail",
+      "original_parsed_answer": "30, 30",
+      "audited_label": "fail",
+      "accepted": false,
+      "audited_answer": null,
+      "score_detail": "unparseable",
+      "extraction": "unparseable"
+    },
+    {
+      "run_index": 2,
+      "original_label": "fail",
+      "original_parsed_answer": "0, 44",
+      "audited_label": "near",
+      "accepted": true,
+      "audited_answer": [
+        72,
+        46.25
+      ],
+      "score_detail": "count +0, hours +0.25",
+      "extraction": "labeled_fields"
+    },
+    {
+      "run_index": 3,
+      "original_label": "fail",
+      "original_parsed_answer": "2715, 2715",
+      "audited_label": "fail",
+      "accepted": false,
+      "audited_answer": null,
+      "score_detail": "unparseable",
+      "extraction": "unparseable"
+    },
+    {
+      "run_index": 4,
+      "original_label": "exact",
+      "original_parsed_answer": "72, 46",
+      "audited_label": "exact",
+      "accepted": true,
+      "audited_answer": [
+        72,
+        46.0
+      ],
+      "score_detail": "exact",
+      "extraction": "explicit_pair_line"
+    },
+    {
+      "run_index": 5,
+      "original_label": "fail",
+      "original_parsed_answer": "9134480, 9.13448e+06",
+      "audited_label": "fail",
+      "accepted": false,
+      "audited_answer": null,
+      "score_detail": "unparseable",
+      "extraction": "unparseable"
+    },
+    {
+      "run_index": 6,
+      "original_label": "fail",
+      "original_parsed_answer": "180, 180",
+      "audited_label": "near",
+      "accepted": true,
+      "audited_answer": [
+        72,
+        45.58
+      ],
+      "score_detail": "count +0, hours -0.42",
+      "extraction": "labeled_fields"
+    },
+    {
+      "run_index": 7,
+      "original_label": "fail",
+      "original_parsed_answer": "30, 18",
+      "audited_label": "fail",
+      "accepted": false,
+      "audited_answer": null,
+      "score_detail": "unparseable",
+      "extraction": "unparseable"
+    },
+    {
+      "run_index": 8,
+      "original_label": "fail",
+      "original_parsed_answer": "15, 13",
+      "audited_label": "fail",
+      "accepted": false,
+      "audited_answer": [
+        67,
+        41.0
+      ],
+      "score_detail": "count -5, hours -5.00",
+      "extraction": "labeled_fields"
+    },
+    {
+      "run_index": 9,
+      "original_label": "fail",
+      "original_parsed_answer": "30, 30",
+      "audited_label": "fail",
+      "accepted": false,
+      "audited_answer": null,
+      "score_detail": "unparseable",
+      "extraction": "unparseable"
+    },
+    {
+      "run_index": 10,
+      "original_label": "fail",
+      "original_parsed_answer": "1, 72",
+      "audited_label": "fail",
+      "accepted": false,
+      "audited_answer": null,
+      "score_detail": "unparseable",
+      "extraction": "unparseable"
+    }
+  ]
+}

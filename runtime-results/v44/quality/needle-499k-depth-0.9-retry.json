@@ -1,0 +1,33 @@
+{
+  "schema": "glm53-needle-targeted-retry.v1",
+  "created_at": "2026-08-27T18:10:00-04:00",
+  "regime": "v43 rootfs, TP2, DCP2, CUDA graph, MTP3, NVFP4 MLA KV, prefix caching disabled",
+  "reason": "The raw 18-cell matrix produced 17 exact hits. Its final 499K/depth-0.9 cell generated exactly the 1600 tokens remaining under max-model-len=499968 but did not reach a post-reasoning content field.",
+  "raw_matrix": {
+    "path": "needle-through-500k.json",
+    "sha256": "baa77d044d553732b4c2beec66292fdb4977eafbce6e8d8ca8a72841a24c3fc1",
+    "passed": 17,
+    "total": 18
+  },
+  "harness": {
+    "path": "/home/brandonmusic/klc-linux/needle_haystack_test.py",
+    "sha256": "87ae077fa1c6a614bbd6abb366fe456ef241e073651d5961fd0578b3cbdbe830"
+  },
+  "retry": {
+    "ctx_target": 499000,
+    "depth": 0.9,
+    "prompt_tokens": 498368,
+    "max_model_len": 499968,
+    "max_tokens": 1600,
+    "reasoning_effort": "low",
+    "temperature": 0,
+    "secret": "80179821",
+    "content": "80179821",
+    "secret_in_content": true,
+    "completion_tokens": 7,
+    "total_tokens": 498375,
+    "finish_reason": "stop",
+    "seconds": 147.939
+  },
+  "interpretation": "The exact prompt and needle are retrievable at 498368 input tokens. The original empty-content cell was an output-budget/reasoning-mode failure, not evidence of KPool corruption. The raw 17/18 result remains preserved and is not rewritten."
+}

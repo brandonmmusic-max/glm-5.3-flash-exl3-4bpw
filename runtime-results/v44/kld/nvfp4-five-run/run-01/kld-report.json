@@ -1,0 +1,30 @@
+{
+  "capture_manifest_path": "/home/brandonmusic/KLC_SANDBOXES/glm53-exl3-k4-sm120/results/kld/nvfp4-dcp1-eager-five-run-gpu23-v44/capture/run-01-capture-manifest.json",
+  "capture_manifest_sha256": "a5bf2a20f15bea1982e1e258ffcd2311e1fa3b620437261c9efaaa806060cfed",
+  "compute_device": "cuda:2",
+  "compute_dtype": "float64",
+  "elapsed_seconds": 1.357652697013691,
+  "kld_direction": "bf16_teacher_to_r19_exl3_runtime",
+  "max_mean_kld": 0.06,
+  "mean_kld_gate_passed": false,
+  "prediction_positions": 2047,
+  "schema": "glm53-r19-runtime-window-kld.v1",
+  "summary": {
+    "count": 2047,
+    "cvar95": 0.5721694655462046,
+    "max": 6.148331042178773,
+    "mean": 0.06053485053836315,
+    "p50": 0.023459009084952444,
+    "p95": 0.1573787094795434,
+    "p99": 0.6521942715040361,
+    "std": 0.22869430616277722
+  },
+  "teacher_path": "/home/brandonmusic/KLC_SANDBOXES/glm53-exl3-k4-sm120/inputs/kld/teacher/logits/window-0000.safetensors",
+  "teacher_sha256": "9f49af1b1b1a6ac88a00f5feaa89c25232597306d73d7c0cd30bb7e9c775cfb6",
+  "tokens_sha256": "338027e62f41540f73e38c6f9b4b9a06a50196cbd38cd9c69f11886af9d3cf9f",
+  "tokenwise_kld_path": "/home/brandonmusic/KLC_SANDBOXES/glm53-exl3-k4-sm120/results/kld/nvfp4-dcp1-eager-five-run-gpu23-v44/measurements/run-01/tokenwise-kld.npy",
+  "tokenwise_kld_sha256": "03dc42308d83b9f64e04c101253a5e316dd21f1e55332a9d63c36fabac7b156e",
+  "top1_agreement": 0.9154860771861261,
+  "vocab_size": 154880,
+  "window_id": "final-0000"
+}

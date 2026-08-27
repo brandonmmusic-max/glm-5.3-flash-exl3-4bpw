@@ -1,0 +1,186 @@
+{
+  "rows": [
+    {
+      "ctx_target": 32000,
+      "depth": 0.1,
+      "hit": true,
+      "garbled": false,
+      "prompt_tokens": 31987,
+      "completion_tokens": 84,
+      "seconds": 18.3,
+      "reply": "23587838"
+    },
+    {
+      "ctx_target": 32000,
+      "depth": 0.5,
+      "hit": true,
+      "garbled": false,
+      "prompt_tokens": 31988,
+      "completion_tokens": 80,
+      "seconds": 9.2,
+      "reply": "67906361"
+    },
+    {
+      "ctx_target": 32000,
+      "depth": 0.9,
+      "hit": true,
+      "garbled": false,
+      "prompt_tokens": 31989,
+      "completion_tokens": 70,
+      "seconds": 9.1,
+      "reply": "58499640"
+    },
+    {
+      "ctx_target": 64000,
+      "depth": 0.1,
+      "hit": true,
+      "garbled": false,
+      "prompt_tokens": 63956,
+      "completion_tokens": 107,
+      "seconds": 25.3,
+      "reply": "95638618"
+    },
+    {
+      "ctx_target": 64000,
+      "depth": 0.5,
+      "hit": true,
+      "garbled": false,
+      "prompt_tokens": 63956,
+      "completion_tokens": 68,
+      "seconds": 17.8,
+      "reply": "39825244"
+    },
+    {
+      "ctx_target": 64000,
+      "depth": 0.9,
+      "hit": true,
+      "garbled": false,
+      "prompt_tokens": 63956,
+      "completion_tokens": 86,
+      "seconds": 18.2,
+      "reply": "94264692"
+    },
+    {
+      "ctx_target": 128000,
+      "depth": 0.1,
+      "hit": true,
+      "garbled": false,
+      "prompt_tokens": 127854,
+      "completion_tokens": 113,
+      "seconds": 43.8,
+      "reply": "34424420"
+    },
+    {
+      "ctx_target": 128000,
+      "depth": 0.5,
+      "hit": true,
+      "garbled": false,
+      "prompt_tokens": 127853,
+      "completion_tokens": 107,
+      "seconds": 36.0,
+      "reply": "45910571"
+    },
+    {
+      "ctx_target": 128000,
+      "depth": 0.9,
+      "hit": true,
+      "garbled": false,
+      "prompt_tokens": 127853,
+      "completion_tokens": 64,
+      "seconds": 36.3,
+      "reply": "18531981"
+    },
+    {
+      "ctx_target": 256000,
+      "depth": 0.1,
+      "hit": true,
+      "garbled": false,
+      "prompt_tokens": 255690,
+      "completion_tokens": 62,
+      "seconds": 81.7,
+      "reply": "73772827"
+    },
+    {
+      "ctx_target": 256000,
+      "depth": 0.5,
+      "hit": true,
+      "garbled": false,
+      "prompt_tokens": 255692,
+      "completion_tokens": 63,
+      "seconds": 74.0,
+      "reply": "57846925"
+    },
+    {
+      "ctx_target": 256000,
+      "depth": 0.9,
+      "hit": true,
+      "garbled": false,
+      "prompt_tokens": 255690,
+      "completion_tokens": 85,
+      "seconds": 74.8,
+      "reply": "21968147"
+    },
+    {
+      "ctx_target": 384000,
+      "depth": 0.1,
+      "hit": true,
+      "garbled": false,
+      "prompt_tokens": 383528,
+      "completion_tokens": 100,
+      "seconds": 122.8,
+      "reply": "77564528"
+    },
+    {
+      "ctx_target": 384000,
+      "depth": 0.5,
+      "hit": true,
+      "garbled": false,
+      "prompt_tokens": 383525,
+      "completion_tokens": 85,
+      "seconds": 115.1,
+      "reply": "27811566"
+    },
+    {
+      "ctx_target": 384000,
+      "depth": 0.9,
+      "hit": true,
+      "garbled": false,
+      "prompt_tokens": 383527,
+      "completion_tokens": 76,
+      "seconds": 115.5,
+      "reply": "64215952"
+    },
+    {
+      "ctx_target": 499000,
+      "depth": 0.1,
+      "hit": true,
+      "garbled": false,
+      "prompt_tokens": 498367,
+      "completion_tokens": 63,
+      "seconds": 159.6,
+      "reply": "86115386"
+    },
+    {
+      "ctx_target": 499000,
+      "depth": 0.5,
+      "hit": true,
+      "garbled": false,
+      "prompt_tokens": 498365,
+      "completion_tokens": 94,
+      "seconds": 151.7,
+      "reply": "17158782"
+    },
+    {
+      "ctx_target": 499000,
+      "depth": 0.9,
+      "hit": false,
+      "garbled": true,
+      "prompt_tokens": 498368,
+      "completion_tokens": 1600,
+      "seconds": 162.0,
+      "reply": ""
+    }
+  ],
+  "passed": 17,
+  "total": 18
+}

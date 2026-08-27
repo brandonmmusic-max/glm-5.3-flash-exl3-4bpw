@@ -1,0 +1,146 @@
+{
+  "audit_version": 1,
+  "source": "/home/brandonmusic/KLC_SANDBOXES/glm53-exl3-k4-sm120/results/quality/nvfp4-dcp2-graph-mtp3-v44-noprefix-lavd-low/lavd-low-10x.json",
+  "source_sha256": "b9b06a94278f1c003b1e82a8190c68263abec25253c687e32cf2ccdfc7b2ba77",
+  "expected_answer": [
+    72,
+    46.0
+  ],
+  "near_tolerance": 4.0,
+  "summary": {
+    "exact": 1,
+    "near": 3,
+    "fail": 6,
+    "accepted": 4,
+    "total": 10
+  },
+  "runs": [
+    {
+      "run_index": 1,
+      "original_label": "fail",
+      "original_parsed_answer": "9134544, 9.13454e+06",
+      "audited_label": "fail",
+      "accepted": false,
+      "audited_answer": [
+        63,
+        38.0
+      ],
+      "score_detail": "count -9, hours -8.00",
+      "extraction": "explicit_pair_line"
+    },
+    {
+      "run_index": 2,
+      "original_label": "fail",
+      "original_parsed_answer": "75, 39.75",
+      "audited_label": "fail",
+      "accepted": false,
+      "audited_answer": [
+        75,
+        39.75
+      ],
+      "score_detail": "count +3, hours -6.25",
+      "extraction": "explicit_pair_line"
+    },
+    {
+      "run_index": 3,
+      "original_label": "near",
+      "original_parsed_answer": "72, 44",
+      "audited_label": "near",
+      "accepted": true,
+      "audited_answer": [
+        72,
+        44.0
+      ],
+      "score_detail": "count +0, hours -2.00",
+      "extraction": "explicit_pair_line"
+    },
+    {
+      "run_index": 4,
+      "original_label": "fail",
+      "original_parsed_answer": "9134544, 9.13454e+06",
+      "audited_label": "exact",
+      "accepted": true,
+      "audited_answer": [
+        72,
+        46.0
+      ],
+      "score_detail": "exact",
+      "extraction": "explicit_pair_line"
+    },
+    {
+      "run_index": 5,
+      "original_label": "fail",
+      "original_parsed_answer": "21, 10",
+      "audited_label": "near",
+      "accepted": true,
+      "audited_answer": [
+        71,
+        45.25
+      ],
+      "score_detail": "count -1, hours -0.75",
+      "extraction": "explicit_pair_line"
+    },
+    {
+      "run_index": 6,
+      "original_label": "fail",
+      "original_parsed_answer": "9134491, 9.13449e+06",
+      "audited_label": "fail",
+      "accepted": false,
+      "audited_answer": [
+        34,
+        22.0
+      ],
+      "score_detail": "count -38, hours -24.00",
+      "extraction": "explicit_pair_line"
+    },
+    {
+      "run_index": 7,
+      "original_label": "fail",
+      "original_parsed_answer": "9134465, 9.13442e+06",
+      "audited_label": "near",
+      "accepted": true,
+      "audited_answer": [
+        72,
+        44.5
+      ],
+      "score_detail": "count +0, hours -1.50",
+      "extraction": "explicit_pair_line"
+    },
+    {
+      "run_index": 8,
+      "original_label": "fail",
+      "original_parsed_answer": "9134538, 9.13441e+06",
+      "audited_label": "fail",
+      "accepted": false,
+      "audited_answer": null,
+      "score_detail": "unparseable",
+      "extraction": "unparseable"
+    },
+    {
+      "run_index": 9,
+      "original_label": "fail",
+      "original_parsed_answer": "67, 33.5",
+      "audited_label": "fail",
+      "accepted": false,
+      "audited_answer": [
+        67,
+        33.5
+      ],
+      "score_detail": "count -5, hours -12.50",
+      "extraction": "explicit_pair_line"
+    },
+    {
+      "run_index": 10,
+      "original_label": "fail",
+      "original_parsed_answer": "9134465, 9.13442e+06",
+      "audited_label": "fail",
+      "accepted": false,
+      "audited_answer": [
+        73,
+        35.5
+      ],
+      "score_detail": "count +1, hours -10.50",
+      "extraction": "explicit_pair_line"
+    }
+  ]
+}

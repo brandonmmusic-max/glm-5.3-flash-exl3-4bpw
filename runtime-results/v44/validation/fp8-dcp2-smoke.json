@@ -1,0 +1,39 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "The capital of Kentucky is Frankfort.",
+        "function_call": null,
+        "reasoning": "The user is asking a simple factual question: What is the capital of Kentucky?\n\nThe answer is Frankfort. This is a common trivia question because many people mistakenly think Louisville or Lexington (the largest cities) is the capital.\n\nThe user asked for a one-sentence answer, so I should keep it brief.",
+        "refusal": null,
+        "role": "assistant"
+      },
+      "routed_experts": null,
+      "stop_reason": 154827,
+      "token_ids": null
+    }
+  ],
+  "created": 1787854737,
+  "ec_transfer_params": null,
+  "id": "chatcmpl-bb6e8a3d41925b90",
+  "kv_transfer_params": null,
+  "metrics": null,
+  "model": "GLM-5.3-Flash-EXL3-4bpw",
+  "object": "chat.completion",
+  "prompt_logprobs": null,
+  "prompt_text": null,
+  "prompt_token_ids": null,
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.1.dev20111+g7f1e92bec.d20260827-tp2-ebbd1621",
+  "usage": {
+    "completion_tokens": 72,
+    "prompt_tokens": 24,
+    "prompt_tokens_details": null,
+    "total_tokens": 96
+  }
+}

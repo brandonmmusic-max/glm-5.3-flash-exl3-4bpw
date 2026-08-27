@@ -1,0 +1,73 @@
+services:
+  glm53-flash:
+    image: verdictai/glm53-flash-exl3-k4:r19-sm120-tp2-v44@sha256:15192e3930b4ae5558271ebe7d1a5a02da6dcc5a6c292c44e79a3fb8c883b5e1
+    container_name: glm53-flash-exl3-k4-daily
+    init: true
+    ipc: host
+    shm_size: 32gb
+    restart: unless-stopped
+    ports:
+      - "${GLM53_PORT:-8012}:${GLM53_PORT:-8012}"
+    environment:
+      VLLM_ENGINE_READY_TIMEOUT_S: "3600"
+      VLLM_B12X_GLM_NOPE_NVFP4: "1"
+      VLLM_USE_B12X_DCP_A2A: "1"
+      VLLM_B12X_MLA_CKV_GATHER: "0"
+      OMP_NUM_THREADS: "2"
+      NCCL_IB_DISABLE: "1"
+      NCCL_P2P_LEVEL: "4"
+      NCCL_PROTO: LL,LL128,Simple
+    volumes:
+      - "${GLM53_MODEL_PATH:-/home/brandonmusic/models/GLM-5.3-Flash-EXL3-4bpw}:/model:ro"
+      - "${GLM53_CACHE_PATH:-/home/brandonmusic/.cache/glm53-exl3-k4}:/root/.cache"
+    entrypoint: ["vllm"]
+    command:
+      - serve
+      - /model
+      - --served-model-name
+      - GLM-5.3-Flash-EXL3-4bpw
+      - --host
+      - 0.0.0.0
+      - --port
+      - "${GLM53_PORT:-8012}"
+      - --language-model-only
+      - --tensor-parallel-size
+      - "2"
+      - --decode-context-parallel-size
+      - "2"
+      - --dcp-comm-backend
+      - a2a
+      - --dtype
+      - bfloat16
+      - --load-format
+      - safetensors
+      - --moe-backend
+      - b12x
+      - --attention-backend
+      - B12X_MLA_SPARSE
+      - --kv-cache-dtype
+      - nvfp4_ds_mla
+      - --max-model-len
+      - "499968"
+      - --max-num-batched-tokens
+      - "2048"
+      - --max-num-seqs
+      - "1"
+      - --gpu-memory-utilization
+      - "0.986"
+      - --enable-chunked-prefill
+      - --no-enable-prefix-caching
+      - --generation-config
+      - /model
+      - --reasoning-parser
+      - glm45
+      - --disable-custom-all-reduce
+      - --speculative-config
+      - '{"method":"mtp","num_speculative_tokens":3,"draft_sample_method":"probabilistic"}'
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ["${GLM53_GPU_0:-0}", "${GLM53_GPU_1:-1}"]
+              capabilities: [gpu]

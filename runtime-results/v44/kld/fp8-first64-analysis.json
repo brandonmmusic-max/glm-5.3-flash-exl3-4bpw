@@ -1,0 +1,32 @@
+{
+  "schema": "glm53-r19-runtime-kld-prefix-analysis.v1",
+  "regime": "v43 TP2 DCP1 eager no-MTP FP8 MLA KV, GPUs 2,3, exact 2048-token window / 2047 prediction positions",
+  "run_count": 5,
+  "prediction_positions_per_run": 2047,
+  "prefix_positions": 64,
+  "first64_mean_kld_per_run": [
+    0.1918669498987346,
+    0.1918669498987346,
+    0.1918669498987346,
+    0.1918669498987346,
+    0.1918669498987346
+  ],
+  "remaining1983_mean_kld_per_run": [
+    0.01916659436759712,
+    0.019459182734124558,
+    0.019493633643257274,
+    0.018599148439546218,
+    0.01943679003233174
+  ],
+  "mean_remaining1983_kld": 0.019231069843371383,
+  "first64_fraction_of_total_kld_per_run": [
+    0.24418882645401455,
+    0.24140354521155066,
+    0.24107976696822747,
+    0.2497779924855843,
+    0.24161446417996374
+  ],
+  "mean_first64_fraction_of_total_kld": 0.24361291905986815,
+  "full_window_mean_of_run_means": 0.02462857659644576,
+  "interpretation": "The measurement covers all 2047 causal rows. Divergence is front-loaded but is not a first-64-only or truncated-window measurement."
+}

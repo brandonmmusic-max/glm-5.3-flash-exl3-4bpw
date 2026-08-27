@@ -1,0 +1,62 @@
+{
+  "audit_version": 1,
+  "created_at": "2026-08-27T13:57:37-04:00",
+  "published_image": "docker.io/verdictai/glm53-flash-exl3-k4:r19-sm120-tp2-v44",
+  "published_oci_index_digest": "sha256:15192e3930b4ae5558271ebe7d1a5a02da6dcc5a6c292c44e79a3fb8c883b5e1",
+  "linux_amd64_manifest_digest": "sha256:0c35421c2c773743ee74b17592d5bd32143546a2bbfe32fc8f32b97ca74167bf",
+  "local_image_id": "sha256:15192e3930b4ae5558271ebe7d1a5a02da6dcc5a6c292c44e79a3fb8c883b5e1",
+  "overlay_patch_sha256": "1a63000895e60659b9b3e43e2ac48681f0a171f4347c484c740de984215a9535",
+  "overlay_patch_label_matches_git_diff": true,
+  "v43_v44_rootfs_layers_equal": true,
+  "rootfs_layers_sha256": "6d28cab39c05f5893fde419b8c5b2356f35bdf6c8ac4be77282126c6b5db395e",
+  "vllm_tree_file_count": 3803,
+  "v43_v44_vllm_tree_equal": true,
+  "focused_regression": {
+    "image": "klc/glm53-flash-exl3-k4:r19-sm120-tp2-v44",
+    "passed": 80,
+    "skipped": 1,
+    "deselected": 24,
+    "failed": 0,
+    "elapsed_seconds": 39.24,
+    "selection": "modified MLA cache, EXL3, GDN metadata, KPool decode, and sparse MLA backend tests filtered for GLM/EXL3/KPool/DCP/B12X/NoPE behavior",
+    "gpu_skip_reason": "container intentionally launched without GPU while the independent long-context qualifications were running"
+  },
+  "gpu_visible_gdn_regression": {
+    "image": "verdictai/glm53-flash-exl3-k4:r19-sm120-tp2-v44@sha256:15192e3930b4ae5558271ebe7d1a5a02da6dcc5a6c292c44e79a3fb8c883b5e1",
+    "gpu": 2,
+    "passed": 10,
+    "failed": 0,
+    "warnings": 14,
+    "elapsed_seconds": 49.40,
+    "test_file": "tests/v1/attention/test_gdn_metadata_builder.py"
+  },
+  "public_digest_fp8_dcp2_mtp3_validation": {
+    "image": "verdictai/glm53-flash-exl3-k4:r19-sm120-tp2-v44@sha256:15192e3930b4ae5558271ebe7d1a5a02da6dcc5a6c292c44e79a3fb8c883b5e1",
+    "attention_backend": "FLASHINFER_MLA_SPARSE_SM120",
+    "kv_cache_dtype": "fp8_ds_mla",
+    "dcp": 2,
+    "mtp_tokens": 3,
+    "cuda_graphs": true,
+    "prefix_caching": false,
+    "health_ready": true,
+    "coherence": "The capital of Kentucky is Frankfort.",
+    "kv_cache_tokens_reported": 356352,
+    "decode_c1_tok_s": {
+      "0": 121.4,
+      "16384": 120.8,
+      "32768": 109.5
+    },
+    "prefill_client_tok_s": {
+      "8192": 3414,
+      "16384": 3550,
+      "32768": 3580,
+      "65536": 2524
+    },
+    "receipts": {
+      "smoke_sha256": "739e8e84c43c915edc2ca418ace2a1efbb077285d78d8158ab9db14b2b485a50",
+      "decode_sha256": "e43039cf541b36cd8c66f678e7c7f6d11af2ab00250000745ad86c4f31eaf427",
+      "prefill_sha256": "c4fcefea0fe11be2197a4e23dadf35a1f5d82ba98168373f013b6537703fd2a8"
+    }
+  },
+  "evidence_note": "v44 differs from the exercised v43 image only in OCI configuration labels; its complete root filesystem and all 3,803 vLLM files are byte-identical. The added v44 label seals the exact overlay git diff hash."
+}
