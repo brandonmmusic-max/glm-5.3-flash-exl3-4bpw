@@ -33,6 +33,7 @@ services:
       - --language-model-only
       - --tensor-parallel-size
       - "2"
+      - --enable-expert-parallel
       - --decode-context-parallel-size
       - "2"
       - --dcp-comm-backend

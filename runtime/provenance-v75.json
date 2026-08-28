@@ -1,0 +1,30 @@
+{
+  "author": "Brandon M. Music",
+  "canonical_model": {
+    "repo": "https://huggingface.co/brandonmusic/GLM-5.3-Flash-tr3-4bpw",
+    "revision_at_release_preparation": "3ac30cc75074d5ce399f569d9dc55ac924fe0aad"
+  },
+  "canonical_source": {
+    "repo": "https://github.com/brandonmmusic-max/glm-5.3-flash-exl3-4bpw",
+    "revision_before_v75_publication": "c9a6352d3ca0728dd71de6dd88df5e68f82efa95"
+  },
+  "components": {
+    "dockerfile_sha256": "092a898d764ac3950f04bfec799deebefa366b1c8685c90f482aea6ae437f4c9",
+    "exl3_loader_sha256": "ae92592ea8fcd249978134357ea3cd2510fe2aa9bdb1d1a3ab02afdbaeb39f45",
+    "nvfp4_attention_sha256": "0499c674b6890266b50fa0d5724dcfbb83cba3917714a6787e5dddc6feb65572",
+    "nvfp4_scale_bank_sha256": "f10b6ee1116d71c4b61c4603d38cb257b3f0dcfde9bcc0847839e48ac9baeb1d",
+    "route128_kernel_sha256": "28e6a2ca95934921718f75f8cf575be034c23da78776b40d478bef6bf8b0b3cd"
+  },
+  "embedded_path": "/usr/share/glm53/provenance.json",
+  "license": {
+    "file": "LICENSE",
+    "name": "ShapleyMCG License 1.0",
+    "sha256": "9a354667162e40201fa556e29ae7a327cdb112eacaa8ef100106e6063635e28a",
+    "type": "source-available"
+  },
+  "notice": "Transparent provenance metadata only. It performs no telemetry, callback, tracking, or inference-output modification.",
+  "predecessor_local_image_id": "sha256:1bae4c50df9ec53f4869c827dd774260a2faf764d09f494f83724b04502c64f9",
+  "release": "r19-sm120-tp2-ep2-v75",
+  "runtime_bundle_fingerprint": "sha256:508ca365c13c06ff79a61ae921d108ada77efc9cadf54e1d780c975c341bff2a",
+  "schema": "glm53-transparent-provenance.v1"
+}

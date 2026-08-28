@@ -114,6 +114,7 @@ exec docker run --name "${NAME}" \
   --host 0.0.0.0 --port "${PORT}" \
   --language-model-only \
   --tensor-parallel-size 2 \
+  --enable-expert-parallel \
   --decode-context-parallel-size "${DCP}" \
   --dcp-comm-backend a2a \
   --dtype bfloat16 \
