@@ -5,7 +5,8 @@ This directory contains the compact, publishable receipts for the immutable
 included.
 
 - `validation/docker-release.json`: registry digests, runtime contract, and evidence hashes
-- `validation/coherence-smoke.json`: coherent-generation smoke test
+- `validation/coherence-smoke.json`: NVFP4 coherent-generation smoke test
+- `validation/coherence-smoke-fp8.json`: digest-specific FP8 coherent-generation smoke test
 - `validation/route128-vs-generic.json`: route-128 numerical comparison and kernel timings
 - `benchmarks/`: standalone cold-prefill and sustained C1 decode JSON plus logs
 - `kld/`: final five-run FP8 and NVFP4 MLA-cache KLD receipts

@@ -1,0 +1,57 @@
+{
+  "qualification": {
+    "schema": "glm53-coherence-smoke.v1",
+    "captured_at_utc": "2026-08-28T00:19:52Z",
+    "release": "r19-sm120-tp2-ep2-v75",
+    "image": "verdictai/glm53-flash-exl3-k4:r19-sm120-tp2-ep2-v75@sha256:4605c420cc589be9fd15fc759c7f7c2a6035dab48f885c9466eb2233527bca64",
+    "runtime_bundle_fingerprint": "sha256:508ca365c13c06ff79a61ae921d108ada77efc9cadf54e1d780c975c341bff2a",
+    "kv_cache_dtype": "fp8_ds_mla",
+    "attention_backend": "FLASHINFER_MLA_SPARSE_SM120",
+    "tensor_parallel_size": 2,
+    "expert_parallel_size": 2,
+    "decode_context_parallel_size": 2,
+    "mtp_tokens": 3,
+    "max_model_len": 435456,
+    "execution_mode": "CUDA graph",
+    "coherent": true
+  },
+  "response": {
+    "id": "chatcmpl-9e12cb4b70c82f15",
+    "object": "chat.completion",
+    "created": 1787876372,
+    "model": "GLM-5.3-Flash-EXL3-4bpw",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "The capital of Kentucky is Frankfort.",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": "The user is asking a simple factual question: What is the capital of Kentucky? The answer is Frankfort. They want it in one short sentence."
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": 154827,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.1.dev20111+g7f1e92bec.d20260827-tp2-ep-0b6c3cf2",
+    "usage": {
+      "prompt_tokens": 25,
+      "total_tokens": 65,
+      "completion_tokens": 40,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  }
+}

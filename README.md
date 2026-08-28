@@ -168,8 +168,11 @@ historical checkpoint-lineage result is 7/10 exact on v30; it is preserved as
 [historical evidence](runtime-results/v30/quality/hotel-10x.json), not presented
 as a v75 measurement. LAVD remains prominently disclosed as a failed gate.
 
-The release also passed a coherent-generation smoke test; its receipt is
-[`coherence-smoke.json`](runtime-results/v75/validation/coherence-smoke.json).
+Both cache paths produced coherent generation. The NVFP4 receipt is
+[`coherence-smoke.json`](runtime-results/v75/validation/coherence-smoke.json);
+the FP8 receipt was captured live from the exact published digest with
+TP2/EP2, DCP2, CUDA graphs, and MTP3 in
+[`coherence-smoke-fp8.json`](runtime-results/v75/validation/coherence-smoke-fp8.json).
 
 ## Architecture and implementation
 

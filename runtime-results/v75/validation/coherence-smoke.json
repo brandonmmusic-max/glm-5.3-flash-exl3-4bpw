@@ -1,4 +1,18 @@
 {
+  "qualification": {
+    "schema": "glm53-coherence-smoke.v1",
+    "captured_at_utc": "2026-08-27T23:06:31Z",
+    "release": "r19-sm120-tp2-ep2-v75",
+    "image_lineage": "v75 candidate with the same runtime payload as the published v75 image; the published image adds transparent provenance metadata only",
+    "kv_cache_dtype": "nvfp4_ds_mla",
+    "attention_backend": "B12X_MLA_SPARSE",
+    "tensor_parallel_size": 2,
+    "expert_parallel_size": 2,
+    "decode_context_parallel_size": 2,
+    "mtp_tokens": 3,
+    "execution_mode": "CUDA graph",
+    "coherent": true
+  },
   "choices": [
     {
       "finish_reason": "stop",
