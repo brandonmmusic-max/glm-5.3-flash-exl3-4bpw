@@ -1,0 +1,22 @@
+{
+  "rows": [
+    {
+      "ctx_target": 499000,
+      "depth": 0.9,
+      "hit": true,
+      "reasoning_hit": true,
+      "garbled": false,
+      "prompt_tokens": 498367,
+      "completion_tokens": 87,
+      "max_tokens": 1600,
+      "finish_reason": "stop",
+      "stop_reason": 154827,
+      "reasoning_chars": 345,
+      "reasoning_tail": "d to find where this code is mentioned.\n\nI see near the end of the text: \"IMPORTANT RECORD: the authorization code for the Rhinebeck transfer is 23587838.\"\n\nThe user asked me to reply with the code only. So I should just provide \"23587838\".",
+      "seconds": 199.6,
+      "reply": "23587838"
+    }
+  ],
+  "passed": 1,
+  "total": 1
+}

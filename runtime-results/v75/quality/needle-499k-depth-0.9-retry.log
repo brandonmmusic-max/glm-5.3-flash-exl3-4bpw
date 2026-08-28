@@ -1,0 +1,4 @@
+  ctx~ 499000 depth  0.9 prompt_tokens=498367 HIT  (200s) reply='23587838'
+
+  RESULT: 1/1 needles recovered
+  wrote results/final-v75-baked-nvfp4-dcp2-mtp3-500k/needle-499k-depth-0.9-retry.json

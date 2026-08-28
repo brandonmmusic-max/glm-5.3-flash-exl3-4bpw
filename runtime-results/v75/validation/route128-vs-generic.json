@@ -1,0 +1,65 @@
+{
+  "artifact_version": 1,
+  "image": "klc/glm53-flash-exl3-k4:r19-sm120-tp2-ep2-v75-candidate",
+  "shape": {
+    "tokens": 128,
+    "hidden_size": 4096,
+    "intermediate_size": 2048,
+    "local_experts": 144,
+    "route_experts": 288,
+    "topk": 8,
+    "trellis_bits": 4,
+    "route_block_size": 128
+  },
+  "memory_contract": "SMEM/register only; TMEM/TCGEN forbidden",
+  "storage_tile_config": [128, 128, 128, 128],
+  "route128_launch": [64, 256, 64, 256],
+  "generic_launch": [128, 128, 128, 128],
+  "comparisons": [
+    {
+      "routes": "concentrated",
+      "seed": 20260827,
+      "shape": [128, 4096],
+      "bitwise_equal": false,
+      "finite": true,
+      "max_abs": 9.387684985995293e-05,
+      "mean_abs": 1.5263465684256516e-05,
+      "rel_l2": 0.00026461639208719134,
+      "cosine": 0.9999999650227713,
+      "route128_us": 432.512,
+      "generic_us": 436.704,
+      "route128_sha256": "1b5afee6a92a3d94da83e7f3e01b12f2efe17a5e1cfdae9ecdab061950c10c27",
+      "generic_sha256": "e40dd2cd95d63cb1d2c0bb7a24a604a8a27cf2ee1c7a63e930971f7f4cb6be22"
+    },
+    {
+      "routes": "spread",
+      "seed": 20260828,
+      "shape": [128, 4096],
+      "bitwise_equal": false,
+      "finite": true,
+      "max_abs": 0.00011975690722465515,
+      "mean_abs": 8.84351902641356e-06,
+      "rel_l2": 0.0002663963532540947,
+      "cosine": 0.9999999645505564,
+      "route128_us": 2815.072,
+      "generic_us": 4489.824,
+      "route128_sha256": "396912ed905897b999932bac2cb75e62e5f92d18f52e1b756207a5f9561bb34e",
+      "generic_sha256": "21b872750242b7549cd988f387b84bdd05efdacfb536ad456e44443fe032fec2"
+    },
+    {
+      "routes": "random",
+      "seed": 20260829,
+      "shape": [128, 4096],
+      "bitwise_equal": false,
+      "finite": true,
+      "max_abs": 9.07406210899353e-05,
+      "mean_abs": 1.0995892807841301e-05,
+      "rel_l2": 0.00026705770869739354,
+      "cosine": 0.9999999643783836,
+      "route128_us": 2632.928,
+      "generic_us": 4333.632,
+      "route128_sha256": "e889345b5afe2ae07052f028328dffecc52471b7e033d44ab22028f66bd8477b",
+      "generic_sha256": "385287f6c67565a86a2d3f6d1e355601884ddf6b4545a557d5f1737ed174e742"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+  ctx~  32000 depth  0.1 prompt_tokens=31987 HIT  (7s) reply='23587838'
+  ctx~  32000 depth  0.5 prompt_tokens=31988 HIT  (7s) reply='67906361'
+  ctx~  32000 depth  0.9 prompt_tokens=31989 HIT  (7s) reply='58499640'
+  ctx~  64000 depth  0.1 prompt_tokens=63956 HIT  (13s) reply='95638618'
+  ctx~  64000 depth  0.5 prompt_tokens=63956 HIT  (13s) reply='39825244'
+  ctx~  64000 depth  0.9 prompt_tokens=63956 HIT  (13s) reply='94264692'
+  ctx~ 128000 depth  0.1 prompt_tokens=127854 HIT  (33s) reply='34424420'
+  ctx~ 128000 depth  0.5 prompt_tokens=127853 HIT  (25s) reply='45910571'
+  ctx~ 128000 depth  0.9 prompt_tokens=127853 HIT  (25s) reply='18531981'
+  ctx~ 256000 depth  0.1 prompt_tokens=255690 HIT  (57s) reply='73772827'
+  ctx~ 256000 depth  0.5 prompt_tokens=255692 HIT  (50s) reply='57846925'
+  ctx~ 256000 depth  0.9 prompt_tokens=255690 HIT  (51s) reply='21968147'
+  ctx~ 384000 depth  0.1 prompt_tokens=383528 HIT  (83s) reply='77564528'
+  ctx~ 384000 depth  0.5 prompt_tokens=383525 HIT  (75s) reply='27811566'
+  ctx~ 384000 depth  0.9 prompt_tokens=383527 HIT  (77s) reply='64215952'
+  ctx~ 499000 depth  0.1 prompt_tokens=498367 HIT  (109s) reply='86115386'
+  ctx~ 499000 depth  0.5 prompt_tokens=498365 HIT  (101s) reply='17158782'
+  ctx~ 499000 depth  0.9 prompt_tokens=498368 GARBLED (103s) reply=''
+
+  RESULT: 17/18 needles recovered
+  wrote results/final-v75-baked-nvfp4-dcp2-mtp3-500k/needle-through-500k.json

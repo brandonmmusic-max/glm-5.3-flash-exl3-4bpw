@@ -2,230 +2,218 @@
 base_model: zai-org/GLM-5.3-Flash-BF16
 library_name: transformers
 pipeline_tag: text-generation
+license: other
+license_name: shapleymcg-1.0
+license_link: https://huggingface.co/brandonmusic/GLM-5.3-Flash-tr3-4bpw/blob/main/LICENSE
 tags:
   - glm
   - exl3
+  - tr3
   - vllm
   - sm120
   - nvfp4
   - fp8
 ---
 
-# GLM-5.3-Flash EXL3 4bpw
+# GLM-5.3-Flash TR3 4bpw
 
-Uniform-K4 EXL3 routed experts for GLM-5.3-Flash, with a dedicated two-GPU
-SM120 vLLM/B12X runtime. The recommended release is the evidence-bound
-`v71` image below. It is not compatible with upstream stock vLLM.
+Uniform-K4 EXL3/TR3 routed experts for GLM-5.3-Flash, paired with a dedicated
+two-GPU SM120 vLLM/B12X runtime. The checkpoint is hosted at
+[`brandonmusic/GLM-5.3-Flash-tr3-4bpw`](https://huggingface.co/brandonmusic/GLM-5.3-Flash-tr3-4bpw).
+The runtime is not compatible with stock upstream vLLM.
 
-## Run the current best image
+## Run v75
 
-**Hardware qualified:** two RTX PRO 6000 Blackwell Workstation Edition GPUs
-(SM120, 96 GB each), TP2/EP2.
-
-**Docker Hub:** [`verdictai/glm53-flash-exl3-k4`](https://hub.docker.com/r/verdictai/glm53-flash-exl3-k4)
+Qualified hardware: two RTX PRO 6000 Blackwell Workstation Edition GPUs
+(SM120, 96 GB each), TP2/EP2. Model weights are mounted from the host and are
+not baked into the runtime image.
 
 ```text
-verdictai/glm53-flash-exl3-k4:r19-sm120-tp2-ep2-v71
-OCI index: sha256:bb6d2516f88d963a0c8c10d85582c4580adc8754d506f62ce4915b84c095faca
-linux/amd64: sha256:77850e030d07df2e2907e6741b69883e82287cf731d1aaef8ff3f2070aedf351
+verdictai/glm53-flash-exl3-k4:r19-sm120-tp2-ep2-v75
+OCI index:   sha256:4605c420cc589be9fd15fc759c7f7c2a6035dab48f885c9466eb2233527bca64
+linux/amd64: sha256:e75a00b5e1ce4debd568d029db2868b1ba01e9d7e87ddf034e6b644935213558
 ```
 
-```bash
-docker pull verdictai/glm53-flash-exl3-k4:r19-sm120-tp2-ep2-v71@sha256:bb6d2516f88d963a0c8c10d85582c4580adc8754d506f62ce4915b84c095faca
-```
-
-The image contains the exact runtime overlay and 46-layer NVFP4 scale bank used
-by the v71/v74 measurements. It uses rank-local E144 expert slabs from the
-global E288 route namespace, uniform EXL3 K4 experts, route-128
-SMEM/register kernels, DCP2, and MTP3. SM120 does not use a TMEM path here.
-
-### Option A: Docker Compose
-
-The complete pinned Compose file is
-[`runtime/compose.sm120-tp2.yaml`](runtime/compose.sm120-tp2.yaml).
+### Docker Compose
 
 ```bash
 curl -L -o compose.sm120-tp2.yaml \
   https://raw.githubusercontent.com/brandonmmusic-max/glm-5.3-flash-exl3-4bpw/main/runtime/compose.sm120-tp2.yaml
 
-GLM53_MODEL_PATH=/absolute/path/to/GLM-5.3-Flash-EXL3-4bpw \
+GLM53_MODEL_PATH=/absolute/path/to/GLM-5.3-Flash-tr3-4bpw \
   docker compose -f compose.sm120-tp2.yaml up -d
-```
 
-The service listens on port `8012` by default:
-
-```bash
 curl http://127.0.0.1:8012/v1/models
 ```
 
-### Option B: serve script
-
-The complete script is
-[`runtime/serve-glm53-sm120-tp2.sh`](runtime/serve-glm53-sm120-tp2.sh).
+### Serve script
 
 ```bash
 curl -L -o serve-glm53-sm120-tp2.sh \
   https://raw.githubusercontent.com/brandonmmusic-max/glm-5.3-flash-exl3-4bpw/main/runtime/serve-glm53-sm120-tp2.sh
 chmod +x serve-glm53-sm120-tp2.sh
 
-MODEL=/absolute/path/to/GLM-5.3-Flash-EXL3-4bpw \
+MODEL=/absolute/path/to/GLM-5.3-Flash-tr3-4bpw \
 GPU_DEVICES=0,1 \
   ./serve-glm53-sm120-tp2.sh
 ```
 
-Defaults are NVFP4 MLA KV, TP2/EP2, DCP2, CUDA graphs, probabilistic MTP3,
-prefix caching off, and the immutable v71 digest. Controlled variants:
+The daily defaults are NVFP4 MLA KV, TP2/EP2, DCP2, CUDA graphs,
+probabilistic MTP3, route-128 SMEM/register kernels, and prefix caching off.
+The image contains the calibrated 46-layer NVFP4 scale bank. SM120 does not
+use TMEM or TCGEN in this path.
+
+Controlled alternatives:
 
 ```bash
+# FP8 MLA KV; the measured default maximum context is 262,144 tokens.
 CACHE=fp8_ds_mla ./serve-glm53-sm120-tp2.sh
-DCP=1 ./serve-glm53-sm120-tp2.sh
+
+# Correctness/KLD-style eager run without speculative decoding.
 MTP_TOKENS=0 ENFORCE_EAGER=1 ./serve-glm53-sm120-tp2.sh
+
+# Explicit long-context NVFP4 profile.
+PROFILE=long500k ./serve-glm53-sm120-tp2.sh
 ```
 
-The inherited `PROFILE=long500k` launcher is available for NVFP4, but its
-500K qualification is historical v44 evidence; 500K was not rebenchmarked
-after the v71 overlay.
+The full launch artifacts are
+[`runtime/compose.sm120-tp2.yaml`](runtime/compose.sm120-tp2.yaml) and
+[`runtime/serve-glm53-sm120-tp2.sh`](runtime/serve-glm53-sm120-tp2.sh).
+Both explicitly enable expert parallelism; omitting `--enable-expert-parallel`
+does not reproduce the qualified TP2/EP2 regime.
 
-## Current measured performance
+## v75 performance
 
-The current performance profile is NVFP4 MLA KV, TP2/EP2, DCP2, CUDA graphs,
-probabilistic MTP3, route-128 SMEM/register, and prefix caching disabled.
-Measurements used GPUs 1 and 3, both full-power workstation cards, at a +6000
-MHz memory offset and 600 W limits. These are OC results, not a claim that the
-overclock alone caused the improvement.
+The speed profile is NVFP4 MLA KV, TP2/EP2, DCP2, CUDA graphs, MTP3,
+route-128 SMEM/register, and prefix caching disabled. It used workstation GPUs
+1 and 3 at a +6000 MHz memory offset and 600 W power limits. These are OC
+measurements, not a claim that overclocking alone produced the result.
 
 ### Standalone cold prefill
 
-| Context | Actual prompt tokens | TTFT | Prefill tok/s | Samples |
+| Target | Actual prompt | TTFT | Prefill tok/s | Samples |
 |---:|---:|---:|---:|---:|
-| 8K | 8,201 | 1.433 s | **5,723** | 7 |
-| 16K | 16,230 | 2.604 s | **6,234** | 4 |
-| 32K | 32,323 | 5.198 s | **6,219** | 2 |
+| 8K | 8,201 | 1.427 s | **5,748** | 7 |
+| 16K | 16,230 | 2.598 s | **6,246** | 4 |
+| 32K | 32,323 | 5.172 s | **6,250** | 2 |
+| 64K | 64,515 | 10.366 s | **6,224** | 1 |
+| 127.9K | 127,888 | 27.944 s | **4,577** | 1 |
 
-The later attempt to extend standalone prefill through 64K and 127K ended with
-an incomplete HTTP chunked read before it wrote valid measurements. Those
-contexts are not assigned prefill numbers.
+Receipt: [prefill JSON](runtime-results/v75/benchmarks/prefill-8k-127k.json)
+and [benchmark log](runtime-results/v75/benchmarks/prefill-8k-127k.log).
 
-Receipt:
-[`nvfp4-dcp2-mtp3-ws13-oc6000-prefill.json`](runtime-results/v71/benchmarks/nvfp4-dcp2-mtp3-ws13-oc6000-prefill.json).
+### Sustained C1 decode
 
-### Sustained decode
+| Context | Aggregate tok/s | MTP draft acceptance | Errors/capacity limit |
+|---:|---:|---:|---:|
+| 0 | **141.94** | 57.06% | 0 / no |
+| 16K | **147.46** | 61.49% | 0 / no |
+| 32K | **143.49** | 29.89% | 0 / no |
+| 64K | **146.29** | 48.85% | 0 / no |
+| 124K | **148.35** | 55.93% | 0 / no |
 
-The clean dedicated C1 run measured:
+Receipt: [decode JSON](runtime-results/v75/benchmarks/decode-c1-through-124k.json)
+and [benchmark log](runtime-results/v75/benchmarks/decode-c1-through-124k.log).
 
-| Context | C1 tok/s | MTP draft acceptance |
-|---:|---:|---:|
-| 0 | **147.79** | 42.86% |
-| 16K | **148.55** | 50.88% |
-| 32K | **149.58** | 51.72% |
+v75 is not a material short-context speed increase over v71: the 8K-32K
+prefill gain is only about 0.2-0.5%, and short-context C1 decode is slightly
+lower. Its release value is the corrected, stable long-prefill path: valid 64K
+and near-128K prefill receipts plus stable C1 decode through 124K.
 
-The later concurrency matrix measured:
+The route-128 kernel itself is materially faster than the generic kernel in
+its isolated 128-row test: about 37.3% on spread routes and 39.2% on random
+routes, with cosine similarity above `0.99999996`. That microbenchmark should
+not be read as a 37-39% end-to-end serving gain. See the
+[numerical/timing receipt](runtime-results/v75/validation/route128-vs-generic.json).
 
-| Context | C1 | C2 | C4 | C8 | C16 |
-|---:|---:|---:|---:|---:|---:|
-| 0 | 146.7 | 258.2 | 393.9 | 564.8 (7/8)* | 563.1 (7/16)* |
-| 16K | 143.1 | 260.3 | 395.0 | 315.3 (6/8)* | 360.9 (6/16)* |
-| 32K | 144.6 | 242.4 | 385.6 | 481.7 (6/8)* | 445.1 (6/16)* |
-| 64K | 143.2 | 238.5 | 379.2 | 17.1 (5/8)* | 26.5 (5/16)* |
+## MLA KV-cache KLD
 
-`(X/Y)` is average running requests versus requested concurrency. `*` means
-the cell was underfilled, queued, or hit its admission warmup timeout; it is
-not automatically proof of KV exhaustion. The 64K C8/C16 rows were also
-thermally/capacity limited. The nominal 128K requests combined a 131,072-token
-prompt with requested output against a 131,072-token server ceiling, so those
-cells errored and are not reported as throughput.
-
-Receipts:
-
-- [dedicated C1 JSON](runtime-results/v71/benchmarks/nvfp4-dcp2-mtp3-ws13-oc6000-decode-c1.json)
-- [C1-C16 matrix JSON](runtime-results/v71/benchmarks/nvfp4-dcp2-mtp3-ws13-oc6000-c1-c16-through128k.json)
-- [GitHub-renderable benchmark TUI](runtime-results/v71/benchmarks/nvfp4-dcp2-mtp3-ws13-oc6000-c1-c16-through128k-tui.txt)
-
-## Current MLA KV-cache KLD
-
-These are independent five-run means over the complete 2,048-token
-`final-0000` qualification window: 2,047 causal positions per run against
-the sealed BF16 teacher logits. The matched regime is TP2/EP2, DCP2, eager,
-no MTP, route-128 SMEM. MTP is disabled so draft sampling cannot change the
-runtime logits being compared.
+These are final v75 five-run means over the complete 2,048-token `final-0000`
+window: 2,047 causal prediction positions per run against sealed BF16 teacher
+logits. The matched regime is TP2/EP2, DCP2, eager, no MTP, and route-128
+SMEM/register. MTP is intentionally disabled so draft sampling cannot alter
+the runtime logits being compared.
 
 | MLA KV cache | Five-run mean KLD | Population stddev | Mean top-1 agreement | Gate |
 |---|---:|---:|---:|---:|
-| FP8 | **0.024581652920** | 0.000159556478 | 0.936297020029 | pass |
+| FP8 | **0.024610591221** | 0.000256852524 | 0.937274059599 | pass |
 | NVFP4 calibrated power-of-two | **0.054757372223** | 0.000000000000 | 0.914997557401 | pass |
 
-Receipts:
+Receipts: [FP8](runtime-results/v75/kld/fp8-five-run-kld.json),
+[NVFP4](runtime-results/v75/kld/nvfp4-five-run-kld.json), and the
+[46-layer scale bank](runtime-results/v71/calibration/glm53-nvfp4-mla-46-layer-power2-scales.json).
+Only compact aggregate receipts are published; the multi-gigabyte raw captures
+are intentionally excluded.
 
-- [FP8 five-run KLD](runtime-results/v71/kld/fp8-dcp2-route128-five-run-kld.json)
-- [NVFP4 five-run KLD](runtime-results/v71/kld/nvfp4-dcp2-route128-power2-five-run-kld.json)
-- [46-layer NVFP4 scale bank](runtime-results/v71/calibration/glm53-nvfp4-mla-46-layer-power2-scales.json)
+## Quality and long context
 
-## Quality results
+The v75 quality runs use the production NVFP4/DCP2/CUDA-graph/MTP3 path and
+the model's generation defaults, temperature `1.0` and top-p `0.95`.
 
-All tests below used the official generation defaults, temperature `1.0` and
-top-p `0.95`. The weights are unchanged in v71. Estonia and LAVD were
-collected on the v44 NVFP4/DCP2/CUDA-graph/MTP3 runtime line; Hotel was
-collected on an older NVFP4/DCP1 runtime. The v71 image packages the later
-measured runtime bytes and passed current FP8/NVFP4 KLD, but these three task
-suites were not rerun after pulling the final registry digest. They are
-checkpoint/runtime-line evidence, not a claim of a digest-specific rerun.
-
-| Test | Result | Runtime interpretation |
+| Test | v75 result | Interpretation |
 |---|---:|---|
-| Estonia 10x | **10/10 correct** | No errors or 40K-token cap hits; 127.87 aggregate generation tok/s |
-| Hotel Lights 10x | **7/10 exact** | No errors or cap hits; answers were 48 seven times, then 45, 32, and 47 |
-| LAVD normal 10x | **1/10 exact raw; 3/10 accepted after audit** | Nine runs hit the 40K-token ceiling; primarily a reasoning/harness failure |
-| LAVD low-reasoning 10x | **1/10 near raw; 4/10 accepted after audit** | No cap hits; still not a passing quality gate |
-| Needle matrix through 499K | **17/18 raw** | Exact 498,368-token retry recovered the final needle in seven output tokens |
+| Estonia 10x | **10/10** | No errors or token-cap hits; 183.77 aggregate generation tok/s |
+| LAVD-low 10x | **3/10 accepted** | 1 exact + 2 near after response audit; failed quality gate |
+| Needle through 500K | **17/18 raw** | Final 498,368-token/depth-0.9 cell exhausted its 256-token reasoning budget |
+| Exact-limit retry | **1/1** | Same final cell passed with a 1,600-token output allowance |
 
-LAVD remains disclosed as a failed gate. The audit only recovers exact/near
-answers already present in the responses; it does not rewrite wrong answers
-as passes.
+Receipts: [Estonia](runtime-results/v75/quality/estonia-10x.json),
+[LAVD raw](runtime-results/v75/quality/lavd-low-10x.json),
+[LAVD audit](runtime-results/v75/quality/lavd-low-10x-rescored.json),
+[needle matrix](runtime-results/v75/quality/needle-through-500k.json), and
+[final-cell retry](runtime-results/v75/quality/needle-499k-depth-0.9-retry.json).
 
-Receipts:
+Hotel Lights was explicitly stopped and was not rerun on v75. The available
+historical checkpoint-lineage result is 7/10 exact on v30; it is preserved as
+[historical evidence](runtime-results/v30/quality/hotel-10x.json), not presented
+as a v75 measurement. LAVD remains prominently disclosed as a failed gate.
 
-- [Estonia 10x](runtime-results/v44/quality/estonia-10x.json)
-- [Hotel Lights 10x](runtime-results/v30/quality/hotel-10x.json)
-- [LAVD normal raw](runtime-results/v44/quality/lavd-10x-normal.json) and [response audit](runtime-results/v44/quality/lavd-10x-normal-rescored.json)
-- [LAVD low-reasoning raw](runtime-results/v44/quality/lavd-low-10x.json) and [response audit](runtime-results/v44/quality/lavd-low-10x-rescored.json)
-- [needle matrix](runtime-results/v44/quality/needle-through-500k.json) and [final-cell retry](runtime-results/v44/quality/needle-499k-depth-0.9-retry.json)
+The release also passed a coherent-generation smoke test; its receipt is
+[`coherence-smoke.json`](runtime-results/v75/validation/coherence-smoke.json).
 
-## Optimization status
-
-It is fair to call v71 the current validated tuning ceiling for this
-implementation on this two-GPU workstation pair. Rank-local uniform-K loading,
-route-128 SMEM/register kernels, DCP2, MTP3, and calibrated NVFP4 MLA KV have
-all been exercised extensively, and ordinary flag/block-size tuning has
-plateaued.
-
-That is not a fundamental EXL3 or hardware ceiling. Prefill remains around
-6.2K tok/s rather than the hoped-for 10K+, and the underfilled high-concurrency
-cells show scheduler/admission headroom. A material next gain would likely
-require new kernel, attention, or scheduler work rather than another launch
-flag sweep.
-
-## Architecture and checkpoint
+## Architecture and implementation
 
 - BF16 source: `zai-org/GLM-5.3-Flash-BF16@a6c167b62691b2bac901344b65cb651a70f53e43`
-- All routed experts, including MTP45: uniform four-bit EXL3/TR3 MCG
+- Routed experts, including MTP45: uniform four-bit EXL3/TR3 MCG
 - Non-routed tensors: official native dtype
-- 45-layer pattern: 34 linear layers and 11 sparse-attention layers
+- Expert layout: global E288 namespace, rank-local E144 slabs under EP2
+- 45-layer pattern: 34 linear-attention layers and 11 sparse-attention layers
 - Sparse attention: IndexPool-4, top-k 2,048
-- Sampling defaults: temperature `1.0`, top-p `0.95`
+- Route-128 kernel: physical M128/N256/K64, 256 threads, SMEM/register only
+- Production speculation: probabilistic MTP3
+- Generation defaults: temperature `1.0`, top-p `0.95`
 
-The separate offline checkpoint evidence measured a five-cold-run
-teacher-to-student mean KLD of `0.024554564250` over 51,175 causal positions
-per run. Teacher-logit provenance and the former long-form model card are
-preserved in [the historical evidence page](docs/HISTORICAL_MODEL_CARD_2026-08-27.md).
+The current implementation has reached a practical flag/block-size tuning
+plateau on this workstation pair, not a fundamental EXL3 or SM120 limit.
+Further large gains would require new kernel, attention, or scheduler work.
 
-## Artifact index
+## Provenance and license
 
-- [v71 Docker release receipt](runtime-results/v71/validation/docker-release.json)
-- [v71 benchmarks](runtime-results/v71/benchmarks/)
-- [v71 KLD](runtime-results/v71/kld/)
-- [v71 NVFP4 calibration](runtime-results/v71/calibration/)
+The image embeds `/usr/share/glm53/provenance.json`, carries standard OCI
+source/revision/documentation/license labels, and includes a transparent
+runtime-bundle fingerprint. It performs no telemetry, callback, hidden output
+watermark, or inference modification. Verify the immutable image with:
+
+```bash
+curl -L -o verify-provenance.sh \
+  https://raw.githubusercontent.com/brandonmmusic-max/glm-5.3-flash-exl3-4bpw/main/runtime/verify-provenance.sh
+chmod +x verify-provenance.sh
+./verify-provenance.sh \
+  verdictai/glm53-flash-exl3-k4:r19-sm120-tp2-ep2-v75@sha256:4605c420cc589be9fd15fc759c7f7c2a6035dab48f885c9466eb2233527bca64
+```
+
+See [PROVENANCE.md](PROVENANCE.md) and the
+[Docker release receipt](runtime-results/v75/validation/docker-release.json).
+This repository is distributed under the ShapleyMCG License 1.0 in
+[LICENSE](LICENSE). It is source-available and is not described here as an
+OSI-approved open-source license.
+
+## Evidence index
+
+- [v75 release evidence](runtime-results/v75/)
+- [v71 benchmark and calibration archive](runtime-results/v71/)
 - [v44 qualification archive](runtime-results/v44/)
-- [historical model card](docs/HISTORICAL_MODEL_CARD_2026-08-27.md)
+- [historical long-form model card](docs/HISTORICAL_MODEL_CARD_2026-08-27.md)
 
 Credit goes to turboderp for EXL3. Local Inference Lab, Martin Vit, and Luke
 Alonzo contributed or helped test components of the base runtime.

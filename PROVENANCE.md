@@ -14,7 +14,7 @@ Inspect and verify a pulled image with:
 
 ```bash
 runtime/verify-provenance.sh \
-  verdictai/glm53-flash-exl3-k4:r19-sm120-tp2-ep2-v75@sha256:RELEASE_DIGEST
+  verdictai/glm53-flash-exl3-k4:r19-sm120-tp2-ep2-v75@sha256:4605c420cc589be9fd15fc759c7f7c2a6035dab48f885c9466eb2233527bca64
 ```
 
 The canonical public history is the combination of:
@@ -27,4 +27,3 @@ The canonical public history is the combination of:
 These records make copied or modified artifacts correlatable; they do not make
 removal impossible and do not, by themselves, prove legal infringement. The
 applicable attribution and provenance-retention requirements are in `LICENSE`.
-

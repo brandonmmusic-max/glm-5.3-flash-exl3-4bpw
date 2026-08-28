@@ -1,6 +1,6 @@
 services:
   glm53-flash:
-    image: verdictai/glm53-flash-exl3-k4:r19-sm120-tp2-ep2-v71@sha256:bb6d2516f88d963a0c8c10d85582c4580adc8754d506f62ce4915b84c095faca
+    image: verdictai/glm53-flash-exl3-k4:r19-sm120-tp2-ep2-v75@sha256:4605c420cc589be9fd15fc759c7f7c2a6035dab48f885c9466eb2233527bca64
     container_name: glm53-flash-exl3-k4-daily
     init: true
     ipc: host
@@ -18,7 +18,7 @@ services:
       NCCL_P2P_LEVEL: "4"
       NCCL_PROTO: LL,LL128,Simple
     volumes:
-      - "${GLM53_MODEL_PATH:-/home/brandonmusic/models/GLM-5.3-Flash-EXL3-4bpw}:/model:ro"
+      - "${GLM53_MODEL_PATH:-/home/brandonmusic/models/GLM-5.3-Flash-tr3-4bpw}:/model:ro"
       - "${GLM53_CACHE_PATH:-/home/brandonmusic/.cache/glm53-exl3-k4}:/root/.cache"
     entrypoint: ["vllm"]
     command:
