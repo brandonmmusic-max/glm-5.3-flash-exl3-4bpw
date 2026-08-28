@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "image_digest": "sha256:0f1cdcc8891f1cc3a444121eb61d366289a1cbba285f0892dcbb24bc94961692",
+  "profile": "language-only DFlash2-7, TP2/EP2/DCP2, NVFP4 MLA KV",
+  "sampling": {
+    "temperature": 1.0,
+    "top_p": 0.95,
+    "reasoning_effort": "max",
+    "max_tokens": 512
+  },
+  "dataset": "GSM8K test rows 0 through 4",
+  "runs": 5,
+  "correct": 5,
+  "all_finish_reason_stop": true,
+  "mean_acceptance_length": 5.428322368421052,
+  "weighted_acceptance_length": 5.441025641025641,
+  "per_row_acceptance_length": [
+    5.25,
+    4.894736842105263,
+    5.265625,
+    6.03125,
+    5.7
+  ],
+  "note": "This distinct-prompt check explains why synthetic long-context llm_decode_bench acceptance near 2.8 to 3.0 is not evidence of a broken DFlash implementation."
+}

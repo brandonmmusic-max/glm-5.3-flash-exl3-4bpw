@@ -1,0 +1,85 @@
+services:
+  glm53-flash-language-only:
+    # The language-only alias resolves to the same tested v84 code digest as
+    # the multimodal/DFlash2 image. This profile changes the runtime flags.
+    image: verdictai/glm53-flash-exl3-k4:r19-sm120-tp2-ep2-dcp2-v84-language-only@sha256:0f1cdcc8891f1cc3a444121eb61d366289a1cbba285f0892dcbb24bc94961692
+    container_name: glm53-flash-exl3-k4-language-only
+    init: true
+    ipc: host
+    shm_size: 32gb
+    restart: unless-stopped
+    ports:
+      - "${GLM53_PORT:-8012}:${GLM53_PORT:-8012}"
+    environment:
+      VLLM_ENGINE_READY_TIMEOUT_S: "3600"
+      VLLM_B12X_GLM_NOPE_NVFP4: "1"
+      VLLM_NVFP4_MLA_DYNAMIC_SCALE: "0"
+      VLLM_NVFP4_MLA_SCALES_FILE: /opt/glm53/calibration/glm53_nvfp4_mla_outer_scales_mtp_power2_v2.json
+      VLLM_EXL3_PREFILL_BLOCK_M: "128"
+      VLLM_EXL3_PREFILL_TRELLIS: "1"
+      B12X_GL53_ROUTE128_WIDE: "1"
+      B12X_GL53_ROUTE128_HYBRID_TAIL: "1"
+      VLLM_USE_B12X_DCP_A2A: "1"
+      VLLM_ENABLE_PCIE_ALLREDUCE: "1"
+      VLLM_PCIE_ALLREDUCE_BACKEND: cpp
+      KV_FP8_ROPE: "0"
+      OMP_NUM_THREADS: "2"
+      NCCL_IB_DISABLE: "1"
+      NCCL_P2P_LEVEL: "4"
+    volumes:
+      - "${GLM53_MODEL_PATH:?set GLM53_MODEL_PATH to the EXL3 checkpoint}:/model:ro"
+      - "${GLM53_CACHE_PATH:-./glm53-vllm-cache}:/cache"
+    command:
+      - serve
+      - /model
+      - --served-model-name
+      - GLM-5.3-Flash-EXL3-4bpw
+      - --host
+      - 0.0.0.0
+      - --port
+      - "${GLM53_PORT:-8012}"
+      - --language-model-only
+      - --tensor-parallel-size
+      - "2"
+      - --enable-expert-parallel
+      - --decode-context-parallel-size
+      - "2"
+      - --dcp-comm-backend
+      - a2a
+      - --dtype
+      - bfloat16
+      - --load-format
+      - safetensors
+      - --moe-backend
+      - b12x
+      - --attention-backend
+      - B12X_MLA_SPARSE
+      - --kv-cache-dtype
+      - nvfp4_ds_mla
+      - --max-model-len
+      - "${GLM53_MAX_MODEL_LEN:-131072}"
+      - --max-num-batched-tokens
+      - "2048"
+      - --max-num-seqs
+      - "1"
+      - --gpu-memory-utilization
+      - "0.986"
+      - --enable-chunked-prefill
+      - --no-enable-prefix-caching
+      - --generation-config
+      - /model
+      - --reasoning-parser
+      - glm45
+      - --tool-call-parser
+      - glm47
+      - --enable-auto-tool-choice
+      - --disable-custom-all-reduce
+      - --speculative-config
+      - '{"method":"mtp","num_speculative_tokens":3,"draft_sample_method":"probabilistic"}'
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ["${GLM53_GPU_0:-0}", "${GLM53_GPU_1:-1}"]
+              capabilities: [gpu]

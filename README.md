@@ -65,31 +65,90 @@ KV tokens on the qualified pair. Its hybrid Mamba/DFlash rollback layout has
 room for one full resident request; additional requests queue. C2/C4 rows in
 the raw benchmark are therefore capacity-limited and are not throughput claims.
 
+## Language-only profile
+
+For text serving, use the language-only profile. It disables the vision tower
+and uses the built-in MTP3 head by default, avoiding a second external
+checkpoint and leaving substantially more room for KV cache:
+
+```bash
+curl -L -o compose.sm120-tp2-language-only.yaml \
+  https://raw.githubusercontent.com/brandonmmusic-max/glm-5.3-flash-exl3-4bpw/main/runtime/compose.sm120-tp2-language-only.yaml
+
+GLM53_MODEL_PATH=/absolute/path/to/GLM-5.3-Flash-tr3-4bpw \
+docker compose -f compose.sm120-tp2-language-only.yaml up -d
+```
+
+Standalone:
+
+```bash
+curl -L -o serve-glm53-sm120-tp2-language-only.sh \
+  https://raw.githubusercontent.com/brandonmmusic-max/glm-5.3-flash-exl3-4bpw/main/runtime/serve-glm53-sm120-tp2-language-only.sh
+chmod +x serve-glm53-sm120-tp2-language-only.sh
+
+MODEL=/absolute/path/to/GLM-5.3-Flash-tr3-4bpw \
+GPU_DEVICES=0,1 \
+./serve-glm53-sm120-tp2-language-only.sh
+```
+
+The language-only alias points to the same tested v84 code digest:
+
+```text
+verdictai/glm53-flash-exl3-k4:r19-sm120-tp2-ep2-dcp2-v84-language-only
+OCI digest: sha256:0f1cdcc8891f1cc3a444121eb61d366289a1cbba285f0892dcbb24bc94961692
+```
+
+Measured capacity on the same two 96 GB GPUs at 300 W each:
+
+| Runtime profile | Vision | Speculator | KV tokens | Concurrency at tested ceiling |
+|---|:---:|---|---:|---:|
+| Multimodal DFlash2-7, 98,304 max | on | external 7-layer draft | 129,473 | 1.32x |
+| Language-only DFlash2-7, 98,304 max | off | external 7-layer draft | 184,619 | 1.88x |
+| **Language-only MTP3, 131,072 max** | **off** | **built-in head** | **1,376,256** | **10.50x** |
+
+Turning vision off raises the DFlash KV token pool by 42.6%. The much larger
+7.45x language-only gain comes from using the built-in MTP head instead of
+keeping the external DFlash2-7 model resident. It is not a vision-only gain.
+The language-only profile does not accept image inputs.
+
 ## Current measured results
 
 Qualified on two RTX PRO 6000 Blackwell Workstation Edition GPUs (96 GB each),
-300 W limits, +6000 MHz memory offset, TP2/EP2/DCP2, NVFP4 MLA KV, prefix cache
-off, and DFlash2-7. Generation uses the model defaults (`temperature=1.0`,
-`top_p=0.95`); the acceptance comparison uses `reasoning_effort=max`.
+TP2/EP2/DCP2, NVFP4 MLA KV, prefix cache off, and DFlash2-7. The current quick
+speed pass used 600 W limits and +6000 MHz memory offsets. Generation uses the
+model defaults (`temperature=1.0`, `top_p=0.95`); the acceptance comparison uses
+`reasoning_effort=max`.
 
 | Measurement | Result |
 |---|---:|
-| Cold prefill, 8K | **3,897 tok/s** |
-| Cold prefill, 64K | **4,297 client / 4,320 server tok/s** |
-| C1 decode, empty context | **129.45 tok/s** |
-| C1 decode, 64K context | **122.24 tok/s** |
+| Cold prefill, 32K | **6,225 client / 6,277 server tok/s** |
+| Cold prefill, 64K | **6,083 client / 6,130 server tok/s** |
+| C1 decode, empty context | **145.5 tok/s** |
+| C1 decode, 32K context | **147.2 tok/s** |
+| C1 decode, 64K context | **151.5 tok/s** |
+| DFlash2 acceptance, 5 distinct GSM8K prompts | **5.428 mean / 5.441 token-weighted; 5/5 correct** |
 | DFlash2 acceptance, GSM8K first 16 | **5.739 mean / 5.550 token-weighted** |
 | DFlash2 acceptance, published reference | 5.78 mean over 128 samples |
 | Image smoke | **pass** — correctly identified a mallard |
 
-The DFlash acceptance fix is material: the partially ported Triton mask scored
+The clean C1 decode run used a 4,096-token completion budget so the client did
+not roll into the next prefill request. A prior 60.1 tok/s row was a harness
+rollover artifact and is excluded. The DFlash acceptance fix is material: the partially ported Triton mask scored
 1.017 weighted. Restoring the reference semantics—full bidirectional visibility
 inside the draft block with a backward-only historical window—raised the same
-five-seed probe to 5.068 and the exact GSM8K sample to 5.739.
+five-seed probe to 5.068 and the exact GSM8K sample to 5.739. Synthetic padded
+long-context decode accepts roughly 2.8–3.0 tokens/step, while five distinct
+GSM8K reasoning prompts accepted 4.89–6.03 and all answered correctly; acceptance
+is workload-dependent.
 
-Receipts: [benchmark JSON](runtime-results/v84/benchmarks/llm-decode-c1-c4-64k.json),
-[native benchmark TUI](runtime-results/v84/benchmarks/llm-decode-c1-c4-64k.tui.log),
+Receipts: [600 W prefill JSON](runtime-results/v84/benchmarks/llm-decode-c1-prefill32k64k-600w.json),
+[600 W prefill TUI](runtime-results/v84/benchmarks/llm-decode-c1-prefill32k64k-600w.tui.log),
+[clean 600 W C1 decode JSON](runtime-results/v84/benchmarks/llm-decode-c1-clean-4096-600w.json),
+[clean 600 W C1 decode TUI](runtime-results/v84/benchmarks/llm-decode-c1-clean-4096-600w.tui.log),
+[earlier C1-C4 benchmark](runtime-results/v84/benchmarks/llm-decode-c1-c4-64k.json),
 [acceptance rows](runtime-results/v84/quality/gsm8k-first16-max-acceptance.jsonl),
+[distinct-prompt acceptance](runtime-results/v84/quality/gsm8k-distinct5-language-only-acceptance.json),
+[language-only capacity](runtime-results/v84/validation/language-only-capacity.json),
 and [release validation](runtime-results/v84/validation/release.json).
 
 ## Quality and KLD
