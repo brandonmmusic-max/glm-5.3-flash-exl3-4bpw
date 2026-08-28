@@ -1,7 +1,7 @@
 services:
   glm53-flash:
-    image: verdictai/glm53-flash-exl3-k4:r19-sm120-tp2-ep2-v75@sha256:4605c420cc589be9fd15fc759c7f7c2a6035dab48f885c9466eb2233527bca64
-    container_name: glm53-flash-exl3-k4-daily
+    image: verdictai/glm53-flash-exl3-k4:r19-sm120-tp2-ep2-dcp2-v84-dflash2@sha256:0f1cdcc8891f1cc3a444121eb61d366289a1cbba285f0892dcbb24bc94961692
+    container_name: glm53-flash-exl3-k4-dflash2
     init: true
     ipc: host
     shm_size: 32gb
@@ -11,16 +11,19 @@ services:
     environment:
       VLLM_ENGINE_READY_TIMEOUT_S: "3600"
       VLLM_B12X_GLM_NOPE_NVFP4: "1"
+      VLLM_NVFP4_MLA_DYNAMIC_SCALE: "0"
+      VLLM_NVFP4_MLA_SCALES_FILE: /opt/glm53/calibration/glm53_nvfp4_mla_outer_scales_mtp_power2_v2.json
+      VLLM_EXL3_PREFILL_BLOCK_M: "128"
       VLLM_USE_B12X_DCP_A2A: "1"
-      VLLM_B12X_MLA_CKV_GATHER: "0"
+      VLLM_ENABLE_PCIE_ALLREDUCE: "1"
+      VLLM_PCIE_ALLREDUCE_BACKEND: cpp
       OMP_NUM_THREADS: "2"
       NCCL_IB_DISABLE: "1"
       NCCL_P2P_LEVEL: "4"
-      NCCL_PROTO: LL,LL128,Simple
     volumes:
-      - "${GLM53_MODEL_PATH:-/home/brandonmusic/models/GLM-5.3-Flash-tr3-4bpw}:/model:ro"
-      - "${GLM53_CACHE_PATH:-/home/brandonmusic/.cache/glm53-exl3-k4}:/root/.cache"
-    entrypoint: ["vllm"]
+      - "${GLM53_MODEL_PATH:?set GLM53_MODEL_PATH to the EXL3 checkpoint}:/model:ro"
+      - "${GLM53_DFLASH_PATH:?set GLM53_DFLASH_PATH to incoai/GLM-5.3-Flash-DFlash2}:/draft:ro"
+      - "${GLM53_CACHE_PATH:-./glm53-vllm-cache}:/cache"
     command:
       - serve
       - /model
@@ -30,7 +33,6 @@ services:
       - 0.0.0.0
       - --port
       - "${GLM53_PORT:-8012}"
-      - --language-model-only
       - --tensor-parallel-size
       - "2"
       - --enable-expert-parallel
@@ -49,22 +51,27 @@ services:
       - --kv-cache-dtype
       - nvfp4_ds_mla
       - --max-model-len
-      - "499968"
+      - "98304"
       - --max-num-batched-tokens
-      - "2048"
+      - "2072"
       - --max-num-seqs
-      - "1"
+      - "4"
       - --gpu-memory-utilization
       - "0.986"
       - --enable-chunked-prefill
       - --no-enable-prefix-caching
       - --generation-config
       - /model
+      - --chat-template
+      - /opt/glm53/chat_template.multimodal.jinja
       - --reasoning-parser
       - glm45
+      - --tool-call-parser
+      - glm47
+      - --enable-auto-tool-choice
       - --disable-custom-all-reduce
       - --speculative-config
-      - '{"method":"mtp","num_speculative_tokens":3,"draft_sample_method":"probabilistic"}'
+      - '{"method":"dflash","model":"/draft","num_speculative_tokens":7,"draft_tensor_parallel_size":2,"draft_sample_method":"probabilistic","rejection_sample_method":"standard","attention_backend":"TRITON_ATTN","kv_cache_dtype":"auto"}'
     deploy:
       resources:
         reservations:

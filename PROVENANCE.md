@@ -3,18 +3,17 @@
 This release uses transparent, content-addressed provenance. It does not use a
 hidden watermark, phone-home request, telemetry, or inference-output marker.
 
-The v75 image embeds `/usr/share/glm53/provenance.json` and carries standard OCI
-source, revision, author, documentation, version, and license labels plus the
-namespaced label `io.github.brandonmmusic-max.glm53.provenance-fingerprint`.
-The fingerprint binds the runtime Dockerfile, EXL3 loader, route-128 kernel,
-NVFP4 attention implementation, and 46-layer scale bank used to prepare the
-release. The registry digest binds the complete published image.
+The current v84 image embeds `/opt/glm53/PROVENANCE.json` and carries standard
+OCI source, revision, author, documentation, version, checkpoint, and release
+labels. The manifest binds the corrected Triton DFlash mask, INT4 attention
+call path, vision RoPE fallback, multimodal template, and validation receipts
+with SHA-256 hashes. The registry digest binds the complete published image.
 
 Inspect and verify a pulled image with:
 
 ```bash
 runtime/verify-provenance.sh \
-  verdictai/glm53-flash-exl3-k4:r19-sm120-tp2-ep2-v75@sha256:4605c420cc589be9fd15fc759c7f7c2a6035dab48f885c9466eb2233527bca64
+  verdictai/glm53-flash-exl3-k4:r19-sm120-tp2-ep2-dcp2-v84-dflash2@sha256:0f1cdcc8891f1cc3a444121eb61d366289a1cbba285f0892dcbb24bc94961692
 ```
 
 The canonical public history is the combination of:

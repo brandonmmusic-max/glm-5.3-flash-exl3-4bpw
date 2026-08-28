@@ -1,0 +1,44 @@
+{
+  "schema": "brandonmusic.glm53.v84-release-validation.v1",
+  "image": "verdictai/glm53-flash-exl3-k4:r19-sm120-tp2-ep2-dcp2-v84-dflash2@sha256:0f1cdcc8891f1cc3a444121eb61d366289a1cbba285f0892dcbb24bc94961692",
+  "hardware": {
+    "gpus": "2x RTX PRO 6000 Blackwell Workstation Edition 96 GB",
+    "device_ids": [1, 3],
+    "power_limit_w_each": 300,
+    "memory_clock_offset_mhz": 6000,
+    "ecc": "disabled"
+  },
+  "runtime": {
+    "tp": 2,
+    "ep": 2,
+    "dcp": 2,
+    "target_kv_cache": "nvfp4_ds_mla",
+    "draft_attention": "TRITON_ATTN",
+    "draft_tokens": 7,
+    "max_model_len": 98304,
+    "allocated_kv_tokens": 129473,
+    "prefix_cache": false
+  },
+  "acceptance": {
+    "dataset": "openai/gsm8k main/test first 16 rows",
+    "reasoning_effort": "max",
+    "temperature": 1.0,
+    "top_p": 0.95,
+    "mean_accepted_tokens": 5.738763,
+    "weighted_accepted_tokens": 5.550212,
+    "completion_tokens": 3928,
+    "stopped": 16,
+    "length_capped": 0
+  },
+  "smoke": {
+    "health": "pass",
+    "text": "pass",
+    "multimodal_warmup": "pass",
+    "image_request": "pass: mallard"
+  },
+  "tests": {
+    "triton_noncausal_swa": "1 passed",
+    "dflash2_speculator": "5 passed",
+    "vision_rope_packaging_fallback": "1 passed"
+  }
+}

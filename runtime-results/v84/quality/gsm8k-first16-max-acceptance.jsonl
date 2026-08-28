@@ -1,0 +1,16 @@
+{"sample":0,"steps":34,"accepted_draft_tokens":164,"acceptance_length":5.823529411764706,"elapsed_s":0.924465,"completion_tokens":199,"finish_reason":"stop"}
+{"sample":1,"steps":15,"accepted_draft_tokens":74,"acceptance_length":5.933333333333334,"elapsed_s":0.435201,"completion_tokens":89,"finish_reason":"stop"}
+{"sample":2,"steps":52,"accepted_draft_tokens":245,"acceptance_length":5.711538461538462,"elapsed_s":1.30215,"completion_tokens":297,"finish_reason":"stop"}
+{"sample":3,"steps":20,"accepted_draft_tokens":96,"acceptance_length":5.8,"elapsed_s":0.546806,"completion_tokens":117,"finish_reason":"stop"}
+{"sample":4,"steps":40,"accepted_draft_tokens":190,"acceptance_length":5.75,"elapsed_s":1.05736,"completion_tokens":230,"finish_reason":"stop"}
+{"sample":5,"steps":51,"accepted_draft_tokens":234,"acceptance_length":5.588235294117647,"elapsed_s":1.29782,"completion_tokens":285,"finish_reason":"stop"}
+{"sample":6,"steps":28,"accepted_draft_tokens":162,"acceptance_length":6.785714285714286,"elapsed_s":0.758619,"completion_tokens":190,"finish_reason":"stop"}
+{"sample":7,"steps":62,"accepted_draft_tokens":248,"acceptance_length":5,"elapsed_s":1.57997,"completion_tokens":310,"finish_reason":"stop"}
+{"sample":8,"steps":66,"accepted_draft_tokens":313,"acceptance_length":5.742424242424242,"elapsed_s":1.69794,"completion_tokens":379,"finish_reason":"stop"}
+{"sample":9,"steps":52,"accepted_draft_tokens":231,"acceptance_length":5.4423076923076925,"elapsed_s":1.31508,"completion_tokens":283,"finish_reason":"stop"}
+{"sample":10,"steps":30,"accepted_draft_tokens":158,"acceptance_length":6.266666666666667,"elapsed_s":0.833121,"completion_tokens":189,"finish_reason":"stop"}
+{"sample":11,"steps":21,"accepted_draft_tokens":130,"acceptance_length":7.190476190476191,"elapsed_s":0.605429,"completion_tokens":151,"finish_reason":"stop"}
+{"sample":12,"steps":59,"accepted_draft_tokens":218,"acceptance_length":4.694915254237288,"elapsed_s":1.49501,"completion_tokens":277,"finish_reason":"stop"}
+{"sample":13,"steps":81,"accepted_draft_tokens":312,"acceptance_length":4.851851851851852,"elapsed_s":2.0386,"completion_tokens":394,"finish_reason":"stop"}
+{"sample":14,"steps":45,"accepted_draft_tokens":219,"acceptance_length":5.866666666666666,"elapsed_s":1.1567,"completion_tokens":264,"finish_reason":"stop"}
+{"sample":15,"steps":51,"accepted_draft_tokens":223,"acceptance_length":5.372549019607843,"elapsed_s":1.33782,"completion_tokens":274,"finish_reason":"stop"}
