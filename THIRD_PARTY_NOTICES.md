@@ -2,7 +2,8 @@
 
 This repository is an independent research implementation. It does not
 wholesale-vendor the projects below, but its design and intended experiments
-build on their work. The BTX writer is the disclosed derived exception.
+build on their work. The disclosed derived exceptions are the BTX writer and
+the preserved R10 EXL3/MCG numerical closure.
 
 - Robert J. Aumann and Lloyd S. Shapley for the Aumann-Shapley value.
 - Joshua Hill and NVIDIA Model Optimizer PR #2183 for Aumann-Shapley
@@ -10,7 +11,11 @@ build on their work. The BTX writer is the disclosed derived exception.
 - Albert Tseng, Qingyao Sun, David Hou, Christopher De Sa, and the QTIP/QuIP#
   authors for trellis quantization and incoherence-processing foundations.
 - turboderp and ExLlamaV3 contributors for EXL3/Trellis quantization and its
-  encoder/runtime ecosystem.
+  encoder/runtime ecosystem. The pinned
+  `reproducibility/r10/lineage/encode_tr3_v31.py` contains numerical
+  orchestration derived in part from ExLlamaV3 v0.0.43 at commit
+  `c5d9c657966ffeeaa9353f0cc899f18629da4a13`. Its complete MIT license is
+  retained in `THIRD_PARTY_LICENSES/EXLLAMAV3-MIT.txt`.
 - The Qwen Team for Qwen3 and `Qwen/Qwen3-30B-A3B-Base` (Apache-2.0).
 - Z.ai for GLM-5.2, the source model in the preserved prior-control lineage.
 - malaiwah for the GLM-5.2 MTP-78 overlay and calibration capture, and Josh

@@ -23,6 +23,13 @@ The canonical public history is the combination of:
 - the Hugging Face model revision and copied release receipt;
 - the hashes inside the embedded provenance manifest.
 
+The portable encoder source closure is independently sealed by
+`reproducibility/r10/SOURCE_SHA256SUMS`. Run
+`python3 reproducibility/r10/verify_bundle.py` to verify every Python source
+file, parse it, and confirm that `R10TrellisCodec` resolves from the published
+package. The architecture-specific compiled extension is not part of that
+portable closure.
+
 These records make copied or modified artifacts correlatable; they do not make
 removal impossible and do not, by themselves, prove legal infringement. The
 applicable attribution and provenance-retention requirements are in `LICENSE`.

@@ -24,6 +24,26 @@ SM120 GPUs: multimodal DFlash2, language-only DFlash2, and language-only MTP3.
 All use calibrated NVFP4 MLA KV and CUDA graphs. This is a custom vLLM/B12X
 build and is not compatible with stock upstream vLLM.
 
+## Encoder reproducibility closure
+
+The repository now contains the complete, hash-verified R10 Python encoder
+closure used by the EXL3/MCG adapter, including
+`r7_encoder/r10_codec.py` (`R10TrellisCodec`) and the pinned
+`lineage/encode_tr3_v31.py` numeric core. It is published under
+[`reproducibility/r10/`](reproducibility/r10/) with a per-file SHA-256
+manifest and an offline verifier:
+
+```bash
+python3 reproducibility/r10/verify_bundle.py
+```
+
+The bundle is byte-identical to the immutable prior-control source at Hugging
+Face revision `7c73450f05a151439d0f184f216b1eefcc394a31`. It contains the
+portable Python/numeric source, not a compiled `exllamav3_ext`; that binary
+must still be built for the target PyTorch, CUDA, and SM ABI and is independently
+hash-bound by the adapter. See the [bundle README](reproducibility/r10/README.md)
+for the exact adapter paths, lineage boundary, and licensing.
+
 ## Pick a serving profile
 
 | Goal | Launcher | Extra checkpoint | Measured KV tokens |
