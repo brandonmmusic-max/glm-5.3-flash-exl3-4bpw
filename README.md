@@ -19,9 +19,23 @@ tags:
 # GLM-5.3-Flash TR3 4bpw — current SM120 runtime
 
 This is the uniform-K4 EXL3/TR3 routed-expert checkpoint for GLM-5.3-Flash.
-The current daily-driver runtime is v84: TP2/EP2/DCP2, calibrated NVFP4 MLA
-KV, DFlash2-7, CUDA graphs, and working image input on two SM120 GPUs. It is a
-custom vLLM/B12X build and is not compatible with stock upstream vLLM.
+The current v84 runtime supports three explicit TP2/EP2/DCP2 profiles on two
+SM120 GPUs: multimodal DFlash2, language-only DFlash2, and language-only MTP3.
+All use calibrated NVFP4 MLA KV and CUDA graphs. This is a custom vLLM/B12X
+build and is not compatible with stock upstream vLLM.
+
+## Pick a serving profile
+
+| Goal | Launcher | Extra checkpoint | Measured KV tokens |
+|---|---|---|---:|
+| Images plus fastest measured C1 decode | `compose.sm120-tp2.yaml` | DFlash2-7 | 129,473 |
+| Text-only DFlash2 decode | `compose.sm120-tp2-language-only-dflash2.yaml` | DFlash2-7 | 184,619 |
+| **Text-only capacity/default** | **`compose.sm120-tp2-language-only.yaml`** | **none; built-in MTP3** | **1,376,256** |
+
+The MTP3 option means the model's built-in MTP head only: it does not load or
+mount the external DFlash checkpoint. Choose DFlash2 when its modest C1 decode
+gain matters more than resident context/concurrency; choose MTP3 for the normal
+text-only daily driver.
 
 ## Run the current image
 
@@ -91,6 +105,20 @@ GPU_DEVICES=0,1 \
 ./serve-glm53-sm120-tp2-language-only.sh
 ```
 
+To keep DFlash2 while disabling vision, use the separate speed-first launcher:
+
+```bash
+curl -L -o compose.sm120-tp2-language-only-dflash2.yaml \
+  https://raw.githubusercontent.com/brandonmmusic-max/glm-5.3-flash-exl3-4bpw/main/runtime/compose.sm120-tp2-language-only-dflash2.yaml
+
+GLM53_MODEL_PATH=/absolute/path/to/GLM-5.3-Flash-tr3-4bpw \
+GLM53_DFLASH_PATH=/absolute/path/to/GLM-5.3-Flash-DFlash2 \
+docker compose -f compose.sm120-tp2-language-only-dflash2.yaml up -d
+```
+
+Its standalone equivalent is
+[`serve-glm53-sm120-tp2-language-only-dflash2.sh`](runtime/serve-glm53-sm120-tp2-language-only-dflash2.sh).
+
 The language-only alias points to the same tested v84 code digest:
 
 ```text
@@ -109,7 +137,10 @@ Measured capacity on the same two 96 GB GPUs at 300 W each:
 Turning vision off raises the DFlash KV token pool by 42.6%. The much larger
 7.45x language-only gain comes from using the built-in MTP head instead of
 keeping the external DFlash2-7 model resident. It is not a vision-only gain.
-The language-only profile does not accept image inputs.
+The language-only profiles do not accept image inputs. The reported KV-token
+pool is total allocated capacity, not a promise that every request can use the
+entire pool; the configured per-request ceiling and scheduler concurrency still
+apply.
 
 ## Current measured results
 
